@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>org.dee</groupId>
+    <artifactId>dee-spring</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <name>dee-spring</name>
+    <description>dee-spring</description>
+    <packaging>pom</packaging>
+
+    <modules>
+        <module>spring-boot-starter-dee-logging</module>
+    </modules>
+
+    <properties>
+        <java.version>1.8</java.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <spring-boot.version>2.6.7</spring-boot.version>
+        <spring-boot.actuator.version>2.6.7</spring-boot.actuator.version>
+        <spring-boot.devtools.version>2.6.7</spring-boot.devtools.version>
+        <spring-boot.nacos.version>2021.0.1.0</spring-boot.nacos.version>
+        <spring-boot.loadbalancer.version>3.1.2</spring-boot.loadbalancer.version>
+        <lombak.version>1.16.10</lombak.version>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-dependencies</artifactId>
+                <version>${spring-boot.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <!--actuator监控-->
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-actuator</artifactId>
+                <version>${spring-boot.actuator.version}</version>
+                <scope>compile</scope>
+            </dependency>
+            <!--热启动-->
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-devtools</artifactId>
+                <version>${spring-boot.devtools.version}</version>
+                <scope>compile</scope>
+            </dependency>
+            <!--nacos-->
+            <dependency>
+                <groupId>com.alibaba.cloud</groupId>
+                <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
+                <version>${spring-boot.nacos.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.alibaba.cloud</groupId>
+                <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
+                <version>${spring-boot.nacos.version}</version>
+            </dependency>
+            <!-- loadbalancer -->
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-starter-loadbalancer</artifactId>
+                <version>${spring-boot.loadbalancer.version}</version>
+            </dependency>
+            <!--lombak-->
+            <dependency>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok</artifactId>
+                <version>${lombak.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+</project>
