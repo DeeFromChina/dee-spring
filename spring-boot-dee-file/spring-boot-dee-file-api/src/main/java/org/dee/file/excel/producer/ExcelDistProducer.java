@@ -1,6 +1,6 @@
 package org.dee.file.excel.producer;
 
-import org.apache.commons.lang3.StringUtils;
+import cn.hutool.core.util.StrUtil;
 import org.dee.file.excel.entity.DeeExcelCell;
 import org.dee.file.excel.factory.AbstractDeeExcelDistFactory;
 import org.dee.file.excel.factory.impl.EnumFactory;
@@ -10,7 +10,7 @@ public class ExcelDistProducer {
 
     public static AbstractDeeExcelDistFactory getFactory(DeeExcelCell cell) {
         String dataSource = cell.getKeyValueDataSource();
-        if(StringUtils.isEmpty(dataSource)){
+        if(StrUtil.isEmpty(dataSource)){
             return null;
         }
         switch (dataSource) {

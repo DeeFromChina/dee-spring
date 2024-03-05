@@ -1,10 +1,10 @@
 package org.dee.web.context;
 
-import com.google.common.collect.Sets;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Component;
 
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
@@ -43,9 +43,9 @@ public class SpringContext implements ApplicationContextAware {
     public static <T> Set<T> getBeans(Class<T> clazz) {
         Map<String, T> beanMap = applicationContext.getBeansOfType(clazz);
         if (beanMap.isEmpty()) {
-            return Sets.newHashSet();
+            return new HashSet();
         } else {
-            Set<T> sets = Sets.newHashSet();
+            Set<T> sets = new HashSet();
             beanMap.forEach((k, v) -> {
                 sets.add(v);
             });

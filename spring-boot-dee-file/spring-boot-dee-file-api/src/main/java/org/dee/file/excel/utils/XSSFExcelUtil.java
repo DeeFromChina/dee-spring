@@ -1,9 +1,9 @@
 package org.dee.file.excel.utils;
 
 import cn.hutool.core.bean.BeanUtil;
+import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.toolkit.ObjectUtils;
 import lombok.SneakyThrows;
-import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
@@ -74,7 +74,7 @@ public class XSSFExcelUtil extends ExcelUtil {
         List<List<?>> list = new ArrayList<>();
         for(int i = 0; i < sheetParams.length; i++){
             DeeExcelSheet excelSheet = sheetParams[i];
-            if(ObjectUtils.isNull(excelSheet.getEntityClass()) && StringUtils.isNotEmpty(excelSheet.getMapperClassPath())) {
+            if(ObjectUtils.isNull(excelSheet.getEntityClass()) && StrUtil.isNotEmpty(excelSheet.getMapperClassPath())) {
                 excelSheet.setEntityClass(Class.forName(excelSheet.getMapperClassPath()));
             }
             int seqNo = excelSheet.getSheetNo();

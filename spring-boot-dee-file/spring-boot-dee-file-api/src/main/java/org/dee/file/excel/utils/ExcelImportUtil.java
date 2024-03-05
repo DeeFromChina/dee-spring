@@ -1,7 +1,7 @@
 package org.dee.file.excel.utils;
 
+import cn.hutool.core.util.StrUtil;
 import lombok.SneakyThrows;
-import org.apache.commons.lang3.StringUtils;
 import org.dee.file.excel.entity.DeeExcelSheet;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -45,7 +45,7 @@ public class ExcelImportUtil {
             throw new Exception("file is empty");
         }
         String fileName = file.getOriginalFilename().toLowerCase();
-        if (!StringUtils.isEmpty(fileName)) {
+        if (!StrUtil.isEmpty(fileName)) {
             String suffix = fileName.substring(fileName.lastIndexOf(".") + 1);
             if ("xls".equals(suffix)) {//读取03
                 return HSSFExcelUtil.getHSSFWorkBook(file.getInputStream(), needReadSheetNums, startReadRowNums);
@@ -70,7 +70,7 @@ public class ExcelImportUtil {
             throw new Exception("file is empty");
         }
         String fileName = file.getOriginalFilename().toLowerCase();
-        if (!StringUtils.isEmpty(fileName)) {
+        if (!StrUtil.isEmpty(fileName)) {
             String suffix = fileName.substring(fileName.lastIndexOf(".") + 1);
             if ("xls".equals(suffix)) {//读取03
                 return HSSFExcelUtil.getHSSFWorkBook(file.getInputStream(), sheetParams);

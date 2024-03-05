@@ -1,6 +1,6 @@
 package org.dee.file.excel.utils;
 
-import org.apache.commons.lang3.StringUtils;
+import cn.hutool.core.util.StrUtil;
 import org.dee.file.excel.entity.DeeExcelCell;
 import org.dee.file.excel.enums.ExcelOperationType;
 import org.dee.file.excel.factory.AbstractDeeExcelDistFactory;
@@ -12,7 +12,7 @@ public class ExcelCellUtil {
 
     public static void setCellsKeyValue(List<DeeExcelCell> cells, ExcelOperationType type) {
         for(DeeExcelCell cell : cells){
-            if(!StringUtils.isEmpty(cell.getKeyValueDataSource())){
+            if(!StrUtil.isEmpty(cell.getKeyValueDataSource())){
                 setKeyValue(cell, type);
             }
         }

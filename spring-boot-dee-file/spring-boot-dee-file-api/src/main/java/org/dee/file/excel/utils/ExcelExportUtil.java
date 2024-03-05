@@ -1,8 +1,8 @@
 package org.dee.file.excel.utils;
 
 import cn.hutool.core.bean.BeanUtil;
+import cn.hutool.core.util.StrUtil;
 import lombok.SneakyThrows;
-import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.ss.util.CellRangeAddressList;
 import org.apache.poi.xssf.streaming.SXSSFSheet;
@@ -264,7 +264,7 @@ public class ExcelExportUtil {
         String type = cellConfig.getCellDataType() == null ? "String" : cellConfig.getCellDataType();
 
         //数据字典替换
-        if(!StringUtils.isEmpty(cellConfig.getKeyValueDataSource())){
+        if(!StrUtil.isEmpty(cellConfig.getKeyValueDataSource())){
             Map<String, String> keyValueMap = cellConfig.getKeyValue();
             cellValue = keyValueMap.get(ConvertUtil.returnString(cellValue));
             cell.setCellValue(ConvertUtil.returnString(cellValue));
@@ -272,7 +272,7 @@ public class ExcelExportUtil {
         else if ("number".equals(type)) {
             cell.setCellValue(ConvertUtil.returnDouble(cellValue));
         }
-        else if (!StringUtils.isEmpty(cellConfig.getCellFormat())) {
+        else if (!StrUtil.isEmpty(cellConfig.getCellFormat())) {
             cell.setCellValue(ConvertUtil.returnDateType(cellValue, cellConfig.getCellFormat()));
         }else {
             cell.setCellValue(ConvertUtil.returnString(cellValue));

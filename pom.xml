@@ -16,6 +16,11 @@
         <module>spring-boot-starter-dee-web</module>
         <module>spring-boot-dee-utils</module>
         <module>spring-boot-dee-file</module>
+<!--        <module>spring-boot-start-dee-gateway-demo</module>-->
+        <module>spring-boot-starter-dee-plugin</module>
+        <module>spring-boot-starter-dee-plugin-demo</module>
+        <module>spring-boot-dee-agent</module>
+        <module>spring-boot-dee-annotation</module>
     </modules>
 
     <properties>

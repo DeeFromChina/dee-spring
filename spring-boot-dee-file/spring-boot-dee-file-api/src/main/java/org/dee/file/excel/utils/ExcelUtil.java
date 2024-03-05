@@ -3,7 +3,7 @@ package org.dee.file.excel.utils;
 import cn.hutool.core.date.DatePattern;
 import cn.hutool.core.date.DateTime;
 import cn.hutool.core.util.ObjectUtil;
-import org.apache.commons.lang3.StringUtils;
+import cn.hutool.core.util.StrUtil;
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.ss.usermodel.CellType;
 import org.dee.utils.DateUtil;
@@ -29,7 +29,7 @@ public class ExcelUtil {
             return ConvertUtil.returnString(value);
         }
         //keyValue替换
-        if(StringUtils.isNotEmpty(cell.getKeyValueDataSource())){
+        if(StrUtil.isNotEmpty(cell.getKeyValueDataSource())){
             Map<String, String> dicts = cell.getKeyValue();
             for(Map.Entry<String, String> entry : dicts.entrySet()){
                 if(entry.getValue().equals(value)){
@@ -39,7 +39,7 @@ public class ExcelUtil {
             return ConvertUtil.returnString(value);
         }
         //format
-        else if(StringUtils.isNotEmpty(cell.getCellFormat())){
+        else if(StrUtil.isNotEmpty(cell.getCellFormat())){
             if(value instanceof Date){
                 return DateUtil.format((Date) value, cell.getCellFormat());
             }
@@ -59,7 +59,7 @@ public class ExcelUtil {
      */
     protected static String getValue(DeeExcelCell cell, String key) {
         //keyValue替换
-        if(!StringUtils.isEmpty(cell.getKeyValueDataSource())){
+        if(!StrUtil.isEmpty(cell.getKeyValueDataSource())){
             Map<String, String> dicts = cell.getKeyValue();
             String value = dicts.get(key);
             return value;

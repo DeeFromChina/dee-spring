@@ -1,0 +1,5 @@
+Manifest-Version: 1.0
+Premain-Class: org.dee.agent.AgentMain
+Agent-Class: org.dee.agent.AgentMain
+Can-Redefine-Classes: true
+Can-Retransform-Classes: true

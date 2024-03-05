@@ -1,6 +1,6 @@
 package org.dee.file.excel.enums;
 
-import org.apache.commons.lang3.StringUtils;
+import cn.hutool.core.util.StrUtil;
 import org.dee.annotations.GetKey;
 import org.dee.annotations.GetValue;
 
@@ -44,7 +44,7 @@ public enum ExcelOperationType {
     }
 
     public static String get(String value) {
-        if (StringUtils.isNotBlank(value)) {
+        if (StrUtil.isNotBlank(value)) {
             for (ExcelOperationType type : values()) {
                 if (type.value.equals(value)) {
                     return type.description;
