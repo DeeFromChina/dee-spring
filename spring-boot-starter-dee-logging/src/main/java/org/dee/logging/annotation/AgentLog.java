@@ -1,14 +1,13 @@
-package org.dee.annotations;
-
+package org.dee.logging.annotation;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
+@Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
-@Target({ElementType.FIELD})
-public @interface GetValue {
+public @interface AgentLog {
 
     String value() default "";
 

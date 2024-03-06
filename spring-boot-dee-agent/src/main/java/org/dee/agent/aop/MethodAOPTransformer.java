@@ -1,4 +1,4 @@
-package org.dee.aop;
+package org.dee.agent.aop;
 
 import cn.hutool.core.util.ArrayUtil;
 import javassist.ClassPool;
@@ -10,13 +10,15 @@ import javassist.bytecode.AttributeInfo;
 import javassist.bytecode.ClassFile;
 import javassist.bytecode.ConstPool;
 import javassist.bytecode.annotation.Annotation;
-import org.dee.aop.configuration.MethodAnnotationConfiguration;
+import lombok.extern.slf4j.Slf4j;
+import org.dee.agent.aop.configuration.MethodAnnotationConfiguration;
 
 import java.io.ByteArrayInputStream;
 import java.lang.instrument.ClassFileTransformer;
 import java.lang.instrument.IllegalClassFormatException;
 import java.security.ProtectionDomain;
 
+@Slf4j
 public class MethodAOPTransformer implements ClassFileTransformer {
 
     private MethodAnnotationConfiguration configuration;
@@ -88,10 +90,10 @@ public class MethodAOPTransformer implements ClassFileTransformer {
             //添加方法注解
             ctClass = addMethodAnnotation(ctClass);
 
-            System.out.println("log-埋点成功:"+className+":"+loader);
+            log.info("log-埋点成功:"+className+":"+loader);
             return ctClass.toBytecode();
         } catch (Exception e) {
-            System.out.println("log-埋点失败:"+className+":"+loader);
+            log.info("log-埋点失败:"+className+":"+loader);
             e.printStackTrace();
         }
         return null;
@@ -107,7 +109,6 @@ public class MethodAOPTransformer implements ClassFileTransformer {
         CtMethod[] methods = ctClass.getDeclaredMethods();
 
         for (CtMethod ctMethod : methods) {
-            System.out.println(ctMethod.getName());
             // 添加方法注解
             // 添加方法注解
             AnnotationsAttribute methodAttr = null;

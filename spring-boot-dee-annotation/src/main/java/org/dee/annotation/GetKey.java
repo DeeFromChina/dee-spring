@@ -1,4 +1,4 @@
-package org.dee.annotations;
+package org.dee.annotation;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

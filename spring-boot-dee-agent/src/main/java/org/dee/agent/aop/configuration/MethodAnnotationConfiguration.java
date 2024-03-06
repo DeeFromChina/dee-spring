@@ -1,4 +1,4 @@
-package org.dee.aop.configuration;
+package org.dee.agent.aop.configuration;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;

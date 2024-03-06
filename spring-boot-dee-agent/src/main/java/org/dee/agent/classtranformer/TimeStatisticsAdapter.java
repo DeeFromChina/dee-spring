@@ -1,4 +1,4 @@
-package org.dee.classtranformer;
+package org.dee.agent.classtranformer;
 
 import aj.org.objectweb.asm.Type;
 import jdk.internal.org.objectweb.asm.MethodVisitor;
@@ -15,8 +15,6 @@ public class TimeStatisticsAdapter extends AdviceAdapter {
 
     protected TimeStatisticsAdapter(int api, MethodVisitor methodVisitor, int access, String name, String descriptor) {
         super(api, methodVisitor, access, name, descriptor);
-        System.out.println("name:" + name);
-        System.out.println("descriptor:" + descriptor);
         this.name = name;
         this.descriptor = descriptor;
         this.parameterCount = Type.getArgumentTypes(descriptor).length;

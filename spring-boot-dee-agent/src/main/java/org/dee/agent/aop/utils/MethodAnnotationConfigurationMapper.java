@@ -1,6 +1,7 @@
-package org.dee.aop.utils;
+package org.dee.agent.aop.utils;
 
-import org.dee.aop.configuration.MethodAnnotationConfiguration;
+
+import org.dee.agent.aop.configuration.MethodAnnotationConfiguration;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +18,6 @@ public class MethodAnnotationConfigurationMapper {
             boolean isBreak = false;
             Object annotationClass = properties.get("org.dee.agent.aop.method.annotationClasses["+i+"]");
             if(annotationClass != null){
-                System.out.println(annotationClass.toString());
                 annotationClasses.add(annotationClass.toString());
             }
             else {
@@ -26,7 +26,8 @@ public class MethodAnnotationConfigurationMapper {
 
             Object basePackage = properties.get("org.dee.agent.aop.method.basePackages["+i+"]");
             if(basePackage != null){
-                basePackages.add(basePackage.toString());
+                String packagePath = basePackage.toString().replace(".", "/");
+                basePackages.add(packagePath);
                 isBreak = false;
             }
 

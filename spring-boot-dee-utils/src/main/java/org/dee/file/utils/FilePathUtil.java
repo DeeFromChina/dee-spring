@@ -1,4 +1,4 @@
-package org.dee.utils;
+package org.dee.file.utils;
 
 import cn.hutool.core.util.StrUtil;
 import org.slf4j.Logger;

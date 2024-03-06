@@ -65,5 +65,5 @@ public @interface DeeLog {
 }
 ```
 
-注：Controller和DeeLog都可以在目标工程中自定义，agent包只是将定义好的注解添加到指定的地方去。
+注：Controller和DeeLog都可以在目标工程中自定义，DeeLogAspect需要被spring托管，agent包只是将定义好的注解添加到指定的地方去。
 

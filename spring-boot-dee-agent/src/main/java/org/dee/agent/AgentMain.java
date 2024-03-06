@@ -1,8 +1,8 @@
 package org.dee.agent;
 
-import org.dee.aop.MethodAOPTransformer;
-import org.dee.aop.utils.ResourceUtil;
-import org.dee.classtranformer.MethodTimingTransformer;
+
+import org.dee.agent.aop.MethodAOPTransformer;
+import org.dee.agent.aop.utils.ResourceUtil;
 
 import java.lang.instrument.Instrumentation;
 
@@ -17,7 +17,7 @@ public class AgentMain {
     public static void premain(String agentArgs, Instrumentation inst) {
         System.out.println("premain");
         //修改字节码-改方法代码
-        inst.addTransformer(new MethodTimingTransformer(), true);
+//        inst.addTransformer(new MethodTimingTransformer(), true);
         //修改字节码-aop
         inst.addTransformer(new MethodAOPTransformer(ResourceUtil.getMethodAnnotationConfiguration()), true);
     }

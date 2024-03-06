@@ -1,8 +1,8 @@
 package org.dee.file.excel.factory.impl;
 
 import cn.hutool.core.bean.BeanUtil;
-import org.dee.annotations.GetKey;
-import org.dee.annotations.GetValue;
+import org.dee.annotation.GetKey;
+import org.dee.annotation.GetValue;
 import org.dee.file.excel.entity.DeeExcelDist;
 import org.dee.file.excel.factory.AbstractDeeExcelDistFactory;
 import org.dee.utils.ConvertUtil;

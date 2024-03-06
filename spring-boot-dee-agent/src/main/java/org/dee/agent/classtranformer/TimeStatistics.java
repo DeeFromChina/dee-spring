@@ -1,4 +1,4 @@
-package org.dee.classtranformer;
+package org.dee.agent.classtranformer;
 
 import java.util.HashMap;
 import java.util.Map;

@@ -1,4 +1,4 @@
-package org.dee.utils;
+package org.dee.file.utils;
 
 import cn.hutool.core.lang.Assert;
 import cn.hutool.core.util.ZipUtil;

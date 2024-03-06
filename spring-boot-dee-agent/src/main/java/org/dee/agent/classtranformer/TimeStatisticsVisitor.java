@@ -1,4 +1,4 @@
-package org.dee.classtranformer;
+package org.dee.agent.classtranformer;
 
 
 import jdk.internal.org.objectweb.asm.ClassVisitor;
