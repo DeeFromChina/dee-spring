@@ -1,7 +1,7 @@
 package org.dee.web.framework.utils;
 
 import lombok.extern.slf4j.Slf4j;
-import org.dee.web.framework.enums.HttpStateCode;
+import org.dee.web.framework.enums.HttpStatusCode;
 import org.dee.web.framework.rpc.RPCResult;
 
 /**
@@ -21,7 +21,7 @@ public class RpcResultUtil {
         if (rpcResult == null || rpcResult.getCode() == null) {
             throw new RuntimeException("远程请求错误");
         }
-        if (!HttpStateCode.OK.is(rpcResult.getCode())) {
+        if (!HttpStatusCode.OK.is(rpcResult.getCode())) {
             log.error(rpcResult.getCode().toString());
             throw new RuntimeException(rpcResult.getMessage());
         }

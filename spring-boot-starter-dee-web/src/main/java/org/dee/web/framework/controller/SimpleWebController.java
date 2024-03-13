@@ -8,8 +8,8 @@ import java.util.List;
  * 简单模式
  * 参数无需校验，无需加工
  * 返回无需加工
- * @param <T>
- * @param <S>
+ * @param <T> 实体类
+ * @param <S> 实体对应Service
  */
 public class SimpleWebController<T, S extends IWebService> extends BaseWebController<T, S> {
 

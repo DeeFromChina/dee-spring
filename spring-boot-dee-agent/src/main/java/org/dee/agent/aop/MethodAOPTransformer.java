@@ -12,6 +12,7 @@ import javassist.bytecode.ConstPool;
 import javassist.bytecode.annotation.Annotation;
 import lombok.extern.slf4j.Slf4j;
 import org.dee.agent.aop.configuration.MethodAnnotationConfiguration;
+import org.dee.agent.aop.utils.ResourceUtil;
 
 import java.io.ByteArrayInputStream;
 import java.lang.instrument.ClassFileTransformer;
@@ -57,10 +58,11 @@ public class MethodAOPTransformer implements ClassFileTransformer {
             return null;
         }
         //判断前缀
-        for (String startsWithString : configuration.getBasePackages()) {
+        for (String patthern : configuration.getBasePackages()) {
             //内部类，不处理
             if(className.indexOf('$')!=-1) return null;
-            if (className.startsWith(startsWithString)) {
+            //能匹配
+            if (ResourceUtil.patternMatch(patthern, className)) {
                 //生成新的class文件
                 return transformNewClass(loader, classfileBuffer, className);
             }

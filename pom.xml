@@ -21,6 +21,7 @@
         <module>spring-boot-starter-dee-plugin-demo</module>
         <module>spring-boot-dee-agent</module>
         <module>spring-boot-dee-annotation</module>
+        <module>spring-boot-starter-dee-log-dashboard</module>
     </modules>
 
     <properties>

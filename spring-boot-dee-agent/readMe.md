@@ -22,6 +22,7 @@ agent有两种方法实现。1、premain，2、attach。可在网上查询两种
 ```
 #### 2、修改配置文件
 在resources目录下新增agent.yml文件。
+targer/classes中需要有agent.yml
 
 ###### agent.yml
 ```yaml

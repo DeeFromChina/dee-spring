@@ -189,7 +189,7 @@ public class DateUtil extends cn.hutool.core.date.DateUtil {
      * @param targetEndDate
      * @return
      */
-    public static Double betweenDay(Date sourceStartDate, Integer sourceStartApm, Date sourceEndDate, Integer sourceEndApm, Date targetStartDate, Date targetEndDate) {
+    public static Double betweenDay(DateTime sourceStartDate, Integer sourceStartApm, DateTime sourceEndDate, Integer sourceEndApm, DateTime targetStartDate, DateTime targetEndDate) {
         //开始时间vsRecord结束时间
         int oSvRE = sourceStartDate.compareTo(targetEndDate);
         //开始时间vsRecord开始时间
@@ -250,14 +250,14 @@ public class DateUtil extends cn.hutool.core.date.DateUtil {
     }
 
     /**
-     * 判断一段时间在另一段时间交集的天数，带上下午
+     * 判断一段时间在另一段时间交集的天数，不带上下午
      * @param sourceStartDate
      * @param sourceEndDate
      * @param targetStartDate
      * @param targetEndDate
      * @return
      */
-    public static Double betweenDay(Date sourceStartDate, Date sourceEndDate, Date targetStartDate, Date targetEndDate) {
+    public static Double betweenDay(DateTime sourceStartDate, DateTime sourceEndDate, DateTime targetStartDate, DateTime targetEndDate) {
         //开始时间vsRecord结束时间
         int oSvRE = sourceStartDate.compareTo(targetEndDate);
         //开始时间vsRecord开始时间
@@ -318,7 +318,7 @@ public class DateUtil extends cn.hutool.core.date.DateUtil {
     }
 
     /**
-     *
+     * 判断当前时间是否在时间区间内
      * @param nowTime   当前时间
      * @param startTime    开始时间
      * @param endTime   结束时间

@@ -3,7 +3,7 @@ package org.dee.web.framework.enums;
 /**
  * Http返回码
  */
-public enum HttpStateCode {
+public enum HttpStatusCode {
 
     /**
      * 100 Continue 继续。客户端应继续其请求
@@ -244,7 +244,7 @@ public enum HttpStateCode {
     /**
      * 444 No Response Nginx上HTTP服务器扩展。服务器不向客户端返回任何信息，并关闭连接（有助于阻止恶意软件）。
      */
-            NO_RESPONSE(444,"No Response"),
+    NO_RESPONSE(444,"No Response"),
     /**
      * 450 Blocked by Windows Parental Controls 这是一个由Windows家庭控制（Microsoft）HTTP阻止的450状态代码的示例，用于信息和测试。
      */
@@ -311,7 +311,7 @@ public enum HttpStateCode {
 
     public final String value;
 
-    HttpStateCode(Integer key, String value) {
+    HttpStatusCode(Integer key, String value) {
         this.key = key;
         this.value = value;
     }
@@ -328,8 +328,8 @@ public enum HttpStateCode {
         return this.value;
     }
 
-    public static HttpStateCode getEnum(Integer key) {
-        for (HttpStateCode operateType : HttpStateCode.values()) {
+    public static HttpStatusCode getEnum(Integer key) {
+        for (HttpStatusCode operateType : HttpStatusCode.values()) {
             if (key != null && operateType.key.equals(key)) {
                 return operateType;
             }

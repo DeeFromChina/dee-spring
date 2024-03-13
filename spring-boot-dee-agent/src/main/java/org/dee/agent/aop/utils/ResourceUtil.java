@@ -10,6 +10,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.util.Properties;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @Slf4j
 public class ResourceUtil {
@@ -40,6 +42,22 @@ public class ResourceUtil {
             log.error("Resource not found.");
         }
         return null;
+    }
+
+    /**
+     * 通配符匹配
+     * @param pattern
+     * @param target
+     * @return
+     */
+    public static boolean patternMatch(String pattern, String target) {
+        Pattern r = Pattern.compile(pattern);
+        Matcher m = r.matcher(target);
+        if (m.find()) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
 }

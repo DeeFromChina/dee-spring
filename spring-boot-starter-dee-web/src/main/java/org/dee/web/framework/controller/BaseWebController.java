@@ -2,10 +2,13 @@ package org.dee.web.framework.controller;
 
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.json.JSONUtil;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import io.swagger.annotations.ApiOperation;
 import lombok.SneakyThrows;
-import org.dee.web.framework.utils.ValidationUtil;
+import org.dee.web.framework.enums.HttpStatusCode;
+import org.dee.web.framework.http.WebResponse;
 import org.dee.web.framework.service.IWebService;
+import org.dee.web.framework.utils.ValidationUtil;
 import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -28,6 +31,27 @@ public abstract class BaseWebController<T, S extends IWebService> {
         return (Class<T>)((ParameterizedType)getClass().getGenericSuperclass()).getActualTypeArguments()[0];
     }
 
+    protected WebResponse<T> success() {
+        return WebResponse.success();
+    }
+
+    protected WebResponse<T> result(T t) {
+        return WebResponse.success(t);
+    }
+
+    protected WebResponse<List<T>> result(List<T> list) {
+        return WebResponse.success(list);
+    }
+
+    protected WebResponse<Page<T>> result(Page<T> page) {
+        WebResponse webResponse = WebResponse.newInstance();
+        webResponse.setCode(HttpStatusCode.OK.getKey());
+        webResponse.setMessage(HttpStatusCode.OK.getValue());
+        webResponse.setData(page.getRecords());
+        webResponse.initPageParam(page.getCurrent(), page.getSize(), page.getTotal(), page.getPages());
+        return webResponse;
+    }
+
     protected abstract void vaildPage(T param);
 
     /**
@@ -37,10 +61,10 @@ public abstract class BaseWebController<T, S extends IWebService> {
      */
     @ApiOperation("分页信息")
     @PostMapping("/query/page")
-    public void queryPage(@RequestBody T param) {
+    public WebResponse queryPage(@RequestBody T param) {
         vaildPage(param);
-//        MsdpPage<T> page = service.queryPage(param);
-//        return result(page);
+        Page<T> page = service.queryPage(param);
+        return result(page);
     }
 
     protected abstract void vaildList(T param);
@@ -52,9 +76,9 @@ public abstract class BaseWebController<T, S extends IWebService> {
      */
     @ApiOperation("查询所有数据")
     @PostMapping("/query/list")
-    public void queryList(@RequestBody T param) {
+    public WebResponse queryList(@RequestBody T param) {
         vaildList(param);
-//        return result(service.queryList(param));
+        return result(service.queryList(param));
     }
 
     /**
@@ -64,9 +88,9 @@ public abstract class BaseWebController<T, S extends IWebService> {
      */
     @ApiOperation("通过主键查询单条数据")
     @GetMapping("/query/unique")
-    public void getById(@RequestParam Serializable id) {
-        Assert.isNull(id, "id can't empty");
-//        return result((T) service.getById(id));
+    public WebResponse getById(@RequestParam Serializable id) {
+        Assert.notNull(id, "id can't empty");
+        return result((T) service.getById(id));
     }
 
     protected abstract void vaildAdd(T t);
@@ -78,12 +102,16 @@ public abstract class BaseWebController<T, S extends IWebService> {
      */
     @ApiOperation("新增数据")
     @PostMapping("/add")
-    public void add(@RequestBody T t) {
+    public WebResponse add(@RequestBody T t) {
         vaildAdd(t);
         service.add(t);
-//        return result();
+        return success();
     }
 
+    /**
+     * 批量新增校验
+     * @param entities
+     */
     protected abstract void vaildAddBatch(List<T> entities);
 
     /**
@@ -93,10 +121,10 @@ public abstract class BaseWebController<T, S extends IWebService> {
      */
     @ApiOperation("批量新增数据")
     @PostMapping("/add/batch")
-    public void addBatch(@RequestBody List<T> entities) {
+    public WebResponse addBatch(@RequestBody List<T> entities) {
         vaildAddBatch(entities);
         service.addBatch(entities);
-//        return result();
+        return success();
     }
 
     protected abstract void vaildUpdate(T t);
@@ -108,10 +136,10 @@ public abstract class BaseWebController<T, S extends IWebService> {
      */
     @ApiOperation("修改数据")
     @PutMapping("/update")
-    public void update(@RequestBody T t) {
+    public WebResponse update(@RequestBody T t) {
         vaildUpdate(t);
         service.update(t);
-//        return result();
+        return success();
     }
 
     protected abstract void vaildUpdateBatch(List<T> entities);
@@ -123,10 +151,10 @@ public abstract class BaseWebController<T, S extends IWebService> {
      */
     @ApiOperation("批量修改数据")
     @PutMapping("/update/batch")
-    public void updateBatch(@RequestBody List<T> entities) {
+    public WebResponse updateBatch(@RequestBody List<T> entities) {
         vaildUpdateBatch(entities);
         service.updateBatch(entities);
-//        return result();
+        return success();
     }
 
     /**
@@ -136,10 +164,10 @@ public abstract class BaseWebController<T, S extends IWebService> {
      */
     @ApiOperation("删除数据")
     @DeleteMapping("/delete")
-    public void delete(@RequestBody List<Serializable> ids) {
+    public WebResponse delete(@RequestBody List<Serializable> ids) {
         Assert.isTrue(ObjectUtil.isNull(ids) || ids.isEmpty(), "ids is empty");
         service.delete(ids);
-//        return result();
+        return success();
     }
 
     /**
@@ -148,8 +176,9 @@ public abstract class BaseWebController<T, S extends IWebService> {
      */
     @ApiOperation("下载导入模版")
     @PostMapping("/template/download")
-    public void downloadTemplate(HttpServletResponse response) {
+    public WebResponse downloadTemplate(HttpServletResponse response) {
         service.downloadTemplate(tempCode, response);
+        return success();
     }
 
     /**
@@ -159,10 +188,11 @@ public abstract class BaseWebController<T, S extends IWebService> {
      */
     @ApiOperation("导出数据")
     @PostMapping("/import")
-    public void importExcel(MultipartFile file, @RequestPart String json) {
+    public WebResponse importExcel(MultipartFile file, @RequestPart String json) {
         ValidationUtil.validateExcelFile(file);
         T param = JSONUtil.toBean(json, getTClass());
         service.importExcel(tempCode, file, param);
+        return success();
     }
 
     /**
@@ -172,8 +202,9 @@ public abstract class BaseWebController<T, S extends IWebService> {
      */
     @ApiOperation("导出数据")
     @PostMapping("/export")
-    public void exportExcel(@RequestBody T param, HttpServletResponse response) {
+    public WebResponse exportExcel(@RequestBody T param, HttpServletResponse response) {
         service.exportExcel(tempCode, param, response);
+        return success();
     }
 
 }
