@@ -1,0 +1,22 @@
+server:
+  port: 8081
+  #启用优雅关机
+  shutdown: graceful
+
+#缓冲10秒
+spring:
+  lifecycle:
+    timeout-per-shutdown-phase: 10s
+
+#license配置
+license:
+  # 私钥别名
+  private-alias: privateKey
+  # 私钥库密码
+  store-pass: deeLicenseStore2024
+  # 私钥密码
+  key-pass: deeLicense2024
+  # 私钥库路径
+  private-keys-store-path: /Users/frieda.li/Desktop/code/dee-spring/dee-spring/spring-boot-dee-license-server/target/privateKey.keystore
+  # 生成license路径
+  license-path: /Users/frieda.li/Desktop/code/dee-spring/dee-spring/spring-boot-dee-license-server/target/certfile2.cer

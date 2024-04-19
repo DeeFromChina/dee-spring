@@ -3,8 +3,8 @@ package org.dee.logging.controller;
 import io.swagger.annotations.ApiOperation;
 import org.dee.logging.entity.LogEntity;
 import org.dee.logging.service.LogEntityService;
-import org.dee.web.framework.controller.SimpleWebController;
-import org.dee.web.framework.http.WebResponse;
+import org.dee.framework.controller.SimpleWebController;
+import org.dee.framework.http.WebResponse;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;

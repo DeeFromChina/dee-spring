@@ -13,15 +13,20 @@
     <modules>
         <module>spring-boot-starter-dee-logging</module>
         <module>spring-boot-starter-dee-nacos</module>
-        <module>spring-boot-starter-dee-web</module>
+        <module>spring-boot-starter-dee-framework</module>
         <module>spring-boot-dee-utils</module>
         <module>spring-boot-dee-file</module>
 <!--        <module>spring-boot-start-dee-gateway-demo</module>-->
-        <module>spring-boot-starter-dee-plugin</module>
+        <module>spring-boot-dee-plugin</module>
         <module>spring-boot-starter-dee-plugin-demo</module>
         <module>spring-boot-dee-agent</module>
         <module>spring-boot-dee-annotation</module>
         <module>spring-boot-starter-dee-log-dashboard</module>
+        <module>spring-boot-starter-dee-log-dashboard-plugin</module>
+        <module>spring-boot-dee-license-server</module>
+        <module>spring-boot-dee-license-client</module>
+        <module>spring-boot-starter-dee-i18n</module>
+        <module>spring-boot-starter-dee-framework-demo</module>
     </modules>
 
     <properties>
@@ -119,6 +124,11 @@
                 <artifactId>mybatis-plus-extension</artifactId>
                 <version>${mybatis-plus.version}</version>
             </dependency>
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus-boot-starter</artifactId>
+                <version>${mybatis-plus.version}</version>
+            </dependency>
             <!--hutool-->
             <dependency>
                 <groupId>cn.hutool</groupId>
@@ -136,6 +146,24 @@
                 <artifactId>commons-io</artifactId>
                 <groupId>commons-io</groupId>
                 <version>2.6</version>
+            </dependency>
+            <!--json-->
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>fastjson</artifactId>
+                <version>1.2.38</version>
+            </dependency>
+            <!--阿里数据库连接池 -->
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>druid-spring-boot-starter</artifactId>
+                <version>1.2.12</version>
+            </dependency>
+            <!-- 动态数据源 -->
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>dynamic-datasource-spring-boot-starter</artifactId>
+                <version>3.5.2</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

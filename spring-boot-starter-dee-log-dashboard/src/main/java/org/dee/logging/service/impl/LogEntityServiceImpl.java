@@ -123,7 +123,12 @@ public class LogEntityServiceImpl implements LogEntityService {
     }
 
     @Override
-    public void delete(List<Serializable> ids) {
+    public void delete(Serializable id) {
+
+    }
+
+    @Override
+    public void deleteBatch(List<Serializable> ids) {
 
     }
 

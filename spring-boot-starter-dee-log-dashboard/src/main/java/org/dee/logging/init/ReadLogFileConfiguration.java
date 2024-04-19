@@ -20,6 +20,7 @@ public class ReadLogFileConfiguration {
 
     @Bean
     public void init() {
+        System.out.println("plugin init");
         String logFilePath = "/Users/frieda.li/Desktop/code/sunline/SunERP/Application_Server/oa-kpi/${sys:system.basedir}/logs/default.log";
         Map<String, ThreadLog> map = LogFileUtil.parseLogFileNio(logFilePath);
         List<LogEntity> list = LogFileUtil.convertLogEntity(map);

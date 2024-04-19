@@ -1,0 +1,10 @@
+server:
+  port: 8081
+
+org:
+  dee:
+    i18n:
+      langage-type: langage
+      basename: message/messages
+      cache-second: 3600
+      encoding: UTF-8

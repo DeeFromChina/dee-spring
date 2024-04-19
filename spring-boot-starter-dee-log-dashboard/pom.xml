@@ -31,7 +31,7 @@
         <!--dee-web-->
         <dependency>
             <groupId>org.dee</groupId>
-            <artifactId>spring-boot-starter-dee-web</artifactId>
+            <artifactId>spring-boot-starter-dee-framework</artifactId>
             <version>${parent.version}</version>
         </dependency>
         <!-- swagger api文档 -->

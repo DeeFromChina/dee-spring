@@ -1,7 +1,7 @@
 package org.dee.agent.aop.utils;
 
 
-import org.dee.agent.aop.configuration.MethodAnnotationConfiguration;
+import org.dee.agent.aop.properties.MethodAnnotationConfigurationProperties;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,8 +9,8 @@ import java.util.Properties;
 
 public class MethodAnnotationConfigurationMapper {
 
-    public static MethodAnnotationConfiguration createConfiguration(Properties properties) {
-        MethodAnnotationConfiguration configuration = new MethodAnnotationConfiguration();
+    public static MethodAnnotationConfigurationProperties createConfiguration(Properties properties) {
+        MethodAnnotationConfigurationProperties configuration = new MethodAnnotationConfigurationProperties();
         List<String> annotationClasses = new ArrayList<>();
         List<String> basePackages = new ArrayList<>();
         int i = 0;

@@ -11,7 +11,7 @@ import javassist.bytecode.ClassFile;
 import javassist.bytecode.ConstPool;
 import javassist.bytecode.annotation.Annotation;
 import lombok.extern.slf4j.Slf4j;
-import org.dee.agent.aop.configuration.MethodAnnotationConfiguration;
+import org.dee.agent.aop.properties.MethodAnnotationConfigurationProperties;
 import org.dee.agent.aop.utils.ResourceUtil;
 
 import java.io.ByteArrayInputStream;
@@ -22,13 +22,13 @@ import java.security.ProtectionDomain;
 @Slf4j
 public class MethodAOPTransformer implements ClassFileTransformer {
 
-    private MethodAnnotationConfiguration configuration;
+    private MethodAnnotationConfigurationProperties configuration;
 
     public MethodAOPTransformer() {
 
     }
 
-    public MethodAOPTransformer(MethodAnnotationConfiguration configuration) {
+    public MethodAOPTransformer(MethodAnnotationConfigurationProperties configuration) {
         this.configuration = configuration;
     }
 

@@ -3,6 +3,7 @@ package org.dee.nacos.configuration;
 import com.alibaba.nacos.api.NacosFactory;
 import com.alibaba.nacos.api.naming.NamingService;
 import com.alibaba.nacos.api.naming.pojo.Instance;
+import org.dee.nacos.properties.NacosProxyConfigurationProperties;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -21,17 +22,17 @@ public class NacosNameRegister {
     private String nacosPath;
 
     @Resource
-    private NacosProxyConfiguration nacosProxyConfiguration;
+    private NacosProxyConfigurationProperties nacosProxyConfigurationProperties;
 
     @Bean
     public void nacosProxyNameRegister() {
         try{
-            if(nacosProxyConfiguration == null || !nacosProxyConfiguration.getEnabled()) {
+            if(nacosProxyConfigurationProperties == null || !nacosProxyConfigurationProperties.getEnabled()) {
                 return;
             }
 
             InetAddress inet = InetAddress.getLocalHost();
-            for(NacosProxyConfiguration.Config config : nacosProxyConfiguration.getConfigs()){
+            for(NacosProxyConfigurationProperties.Config config : nacosProxyConfigurationProperties.getConfigs()){
                 // 创建 Nacos 命名服务实例
                 Properties properties = new Properties();
                 properties.put("serverAddr", nacosPath);

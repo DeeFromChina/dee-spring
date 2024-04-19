@@ -2,7 +2,7 @@ package org.dee.agent.aop.utils;
 
 import lombok.extern.slf4j.Slf4j;
 import org.dee.agent.AgentMain;
-import org.dee.agent.aop.configuration.MethodAnnotationConfiguration;
+import org.dee.agent.aop.properties.MethodAnnotationConfigurationProperties;
 import org.springframework.beans.factory.config.YamlPropertiesFactoryBean;
 import org.springframework.core.io.InputStreamResource;
 
@@ -25,7 +25,7 @@ public class ResourceUtil {
         return yamlFactory.getObject();
     }
 
-    public static MethodAnnotationConfiguration getMethodAnnotationConfiguration() {
+    public static MethodAnnotationConfigurationProperties getMethodAnnotationConfiguration() {
         // 获取 MyAgent 类的类加载器
         ClassLoader classLoader = AgentMain.class.getClassLoader();
 

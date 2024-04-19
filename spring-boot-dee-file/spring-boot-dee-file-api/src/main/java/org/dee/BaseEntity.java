@@ -42,7 +42,7 @@ public class BaseEntity {
      * 标准-创建用户
      */
     @TableField(value = "CREATE_BY")
-    private String createBy;
+    private String  createBy;
 
     /**
      * 标准-最后更新时间
