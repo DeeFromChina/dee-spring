@@ -2,7 +2,7 @@ package org.dee.file.excel.entity;
 
 import com.baomidou.mybatisplus.annotation.*;
 import lombok.*;
-import org.dee.BaseEntity;
+import org.dee.entity.BaseEntity;
 
 import java.io.Serializable;
 import java.util.LinkedHashMap;

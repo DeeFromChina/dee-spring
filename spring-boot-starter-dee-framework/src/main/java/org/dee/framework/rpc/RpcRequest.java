@@ -1,7 +1,7 @@
 package org.dee.framework.rpc;
 
 import lombok.Data;
-import org.dee.framework.http.PageParam;
+import org.dee.entity.PageParam;
 
 import java.io.Serializable;
 

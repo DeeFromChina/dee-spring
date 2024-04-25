@@ -103,6 +103,8 @@ public class ControllerFactory implements ApplicationContextAware {
             e.printStackTrace();
         } catch (IOException e) {
             throw new RuntimeException(e);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
@@ -116,7 +118,7 @@ public class ControllerFactory implements ApplicationContextAware {
      * @throws NoSuchMethodException
      * @throws IllegalAccessException
      */
-    private void scanComponentClass(URL targetUrl, URLClassLoader classLoader) throws IOException, ClassNotFoundException, InvocationTargetException, NoSuchMethodException, IllegalAccessException {
+    private void scanComponentClass(URL targetUrl, URLClassLoader classLoader) throws IOException, ClassNotFoundException, InvocationTargetException, NoSuchMethodException, IllegalAccessException, Exception {
         JarURLConnection jarConnection = (JarURLConnection) targetUrl.openConnection();
         JarFile jarFile = jarConnection.getJarFile();
         // 列出JAR中的所有条目（包括类和其他资源）
@@ -166,7 +168,6 @@ public class ControllerFactory implements ApplicationContextAware {
                 }
             });
         }
-
         // 关闭JAR文件连接
         jarFile.close();
     }

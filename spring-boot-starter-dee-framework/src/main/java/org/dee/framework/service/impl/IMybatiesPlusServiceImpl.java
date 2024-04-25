@@ -12,6 +12,25 @@ import java.util.List;
 
 public abstract class IMybatiesPlusServiceImpl<M extends BaseMapper<T>, T> extends ServiceImpl<M, T> implements IMybatiesPlusService<T> {
 
+    //@Autowired
+    //protected SpringContext context;
+    //
+    //public IMybatiesPlusServiceImpl() {
+    //    try {
+    //        SqlSessionFactory sqlSessionFactory = context.getBean(SqlSessionFactory.class);
+    //
+    //        MapperFactoryBean<?> mapperFactoryBean = new MapperFactoryBean<>(getM());
+    //        mapperFactoryBean.setSqlSessionFactory(sqlSessionFactory);
+    //        baseMapper = (M) mapperFactoryBean.getObject();
+    //    } catch (Exception e) {
+    //        e.printStackTrace();
+    //    }
+    //}
+
+    protected Class<M> getM() {
+        return (Class)this.getResolvableType().as(IMybatiesPlusServiceImpl.class).getGeneric(new int[]{0}).getType();
+    }
+
     protected Class<T> currentMapperClass() {
         return (Class)this.getResolvableType().as(IMybatiesPlusServiceImpl.class).getGeneric(new int[]{0}).getType();
     }

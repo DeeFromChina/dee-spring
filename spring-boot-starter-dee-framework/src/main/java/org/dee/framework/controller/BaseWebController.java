@@ -5,8 +5,8 @@ import cn.hutool.json.JSONUtil;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import io.swagger.annotations.ApiOperation;
 import lombok.SneakyThrows;
-import org.dee.framework.http.WebResponse;
 import org.dee.framework.enums.HttpStatusCode;
+import org.dee.framework.http.WebResponse;
 import org.dee.framework.service.IWebService;
 import org.dee.framework.utils.ValidationUtil;
 import org.springframework.util.Assert;
@@ -29,6 +29,10 @@ public abstract class BaseWebController<T, S extends IWebService> {
     @SneakyThrows
     private Class<T> getTClass(){
         return (Class<T>)((ParameterizedType)getClass().getGenericSuperclass()).getActualTypeArguments()[0];
+    }
+
+    protected Class<S> currentMapperClass() {
+        return (Class<S>)((ParameterizedType)getClass().getGenericSuperclass()).getActualTypeArguments()[1];
     }
 
     protected WebResponse<T> success() {

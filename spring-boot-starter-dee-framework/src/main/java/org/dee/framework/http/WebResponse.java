@@ -1,6 +1,7 @@
 package org.dee.framework.http;
 
 import lombok.Data;
+import org.dee.entity.PageParam;
 import org.dee.framework.enums.HttpStatusCode;
 
 import java.io.Serializable;
@@ -57,7 +58,7 @@ public class WebResponse<T> implements Serializable {
      * @return
      */
     public static PageParam initPageParam(long current, long size, long total, long pages) {
-        PageParam pageParam = new PageParam();
+        PageParam pageParam = PageParam.newInstance();
         pageParam.setCurrent(current);
         pageParam.setSize(size);
         pageParam.setTotal(total);

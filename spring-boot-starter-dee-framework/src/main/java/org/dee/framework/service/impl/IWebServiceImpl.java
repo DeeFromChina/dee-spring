@@ -3,6 +3,7 @@ package org.dee.framework.service.impl;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.SneakyThrows;
 import org.apache.poi.ss.usermodel.Workbook;
+import org.dee.entity.BaseEntity;
 import org.dee.file.excel.service.ExcelTemplateService;
 import org.dee.framework.client.IClient;
 import org.dee.framework.rpc.RpcRequest;
@@ -17,7 +18,7 @@ import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
 import java.util.List;
 
-public abstract class IWebServiceImpl<T, C extends IClient> extends IWebServiceHandler implements IWebService<T> {
+public abstract class IWebServiceImpl<T extends BaseEntity, C extends IClient> extends IWebServiceHandler implements IWebService<T> {
 
     @Resource
     protected C client;
@@ -46,7 +47,9 @@ public abstract class IWebServiceImpl<T, C extends IClient> extends IWebServiceH
     @Override
     public Page<T> queryPage(T param) {
         beforeQueryPage(param);
-        RpcResult<Page<T>> rpcResult = client.queryPage(new RpcRequest(param));
+        RpcRequest rpcRequest = new RpcRequest(param);
+        rpcRequest.setPageParam(param.getPageParam());
+        RpcResult<Page<T>> rpcResult = client.queryPage(rpcRequest);
         vaildFeginResult(rpcResult);
         return afterQueryPage(rpcResult.getBody());
     }
@@ -93,7 +96,7 @@ public abstract class IWebServiceImpl<T, C extends IClient> extends IWebServiceH
         RpcResult.success(rpcResult);
     }
 
-    protected abstract T beforeAddBatch(List<T> entities);
+    protected abstract List<T> beforeAddBatch(List<T> entities);
 
     @Override
     public void addBatch(List<T> entities){
@@ -111,7 +114,7 @@ public abstract class IWebServiceImpl<T, C extends IClient> extends IWebServiceH
         RpcResult.success(rpcResult);
     }
 
-    protected abstract T beforeUpdateBatch(List<T> entities);
+    protected abstract List<T> beforeUpdateBatch(List<T> entities);
 
     @Override
     public void updateBatch(List<T> entities){
@@ -120,7 +123,7 @@ public abstract class IWebServiceImpl<T, C extends IClient> extends IWebServiceH
         RpcResult.success(rpcResult);
     }
 
-    protected abstract List<Serializable> beforeDelete(Serializable id);
+    protected abstract Serializable beforeDelete(Serializable id);
 
     @Override
     public void delete(Serializable id) {

@@ -4,7 +4,6 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.dee.framework.rpc.RpcRequest;
 import org.dee.framework.rpc.RpcResult;
 import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 
@@ -19,7 +18,7 @@ public interface IClient<T> {
     @PostMapping("/query/list")
     RpcResult<List<T>> queryList(RpcRequest<T> rpcRequest);
 
-    @GetMapping("/query/unique")
+    @PostMapping("/query/unique")
     RpcResult<T> getById(RpcRequest<Serializable> rpcRequest);
 
     @PostMapping("/add")

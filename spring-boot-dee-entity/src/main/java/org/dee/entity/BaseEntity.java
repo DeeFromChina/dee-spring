@@ -1,4 +1,4 @@
-package org.dee;
+package org.dee.entity;
 
 import com.baomidou.mybatisplus.annotation.TableField;
 import lombok.Data;
@@ -55,5 +55,8 @@ public class BaseEntity {
      */
     @TableField(value = "LAST_UPDATE_BY")
     private String lastUpdateBy;
+
+    @TableField(exist = false)
+    private PageParam pageParam;
 
 }

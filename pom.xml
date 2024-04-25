@@ -23,10 +23,10 @@
         <module>spring-boot-dee-annotation</module>
         <module>spring-boot-starter-dee-log-dashboard</module>
         <module>spring-boot-starter-dee-log-dashboard-plugin</module>
-        <module>spring-boot-dee-license-server</module>
-        <module>spring-boot-dee-license-client</module>
         <module>spring-boot-starter-dee-i18n</module>
         <module>spring-boot-starter-dee-framework-demo</module>
+        <module>spring-boot-dee-entity</module>
+        <module>spring-boot-dee-license</module>
     </modules>
 
     <properties>
@@ -164,6 +164,28 @@
                 <groupId>com.baomidou</groupId>
                 <artifactId>dynamic-datasource-spring-boot-starter</artifactId>
                 <version>3.5.2</version>
+            </dependency>
+            <!--aop相关-->
+            <dependency>
+                <groupId>org.javassist</groupId>
+                <artifactId>javassist</artifactId>
+                <version>3.25.0-GA</version>
+            </dependency>
+            <!-- Commons -->
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-lang3</artifactId>
+                <version>3.7</version>
+            </dependency>
+            <dependency>
+                <groupId>commons-io</groupId>
+                <artifactId>commons-io</artifactId>
+                <version>2.6</version>
+            </dependency>
+            <dependency>
+                <groupId>commons-codec</groupId>
+                <artifactId>commons-codec</artifactId>
+                <version>1.11</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

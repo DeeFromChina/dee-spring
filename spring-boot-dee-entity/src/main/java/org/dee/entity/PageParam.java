@@ -1,4 +1,4 @@
-package org.dee.framework.http;
+package org.dee.entity;
 
 import lombok.Data;
 
