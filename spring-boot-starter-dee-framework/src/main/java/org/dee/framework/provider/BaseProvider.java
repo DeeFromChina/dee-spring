@@ -5,18 +5,18 @@ import io.swagger.annotations.ApiOperation;
 import org.dee.framework.rpc.RpcRequest;
 import org.dee.framework.rpc.RpcResult;
 import org.dee.framework.service.IMybatiesPlusService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-import javax.annotation.Resource;
 import java.io.Serializable;
 import java.util.List;
 
 public class BaseProvider<T, S extends IMybatiesPlusService<T>> {
 
-    @Resource
+    @Autowired
     protected S service;
 
     protected RpcResult success() {

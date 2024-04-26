@@ -17,7 +17,7 @@ agent有两种方法实现。1、premain，2、attach。可在网上查询两种
 
 #### 1、引用agent包
 该工程package后，会打成agent的jar包。在目标工程中通过vm options将agent包添加到工程中
-```properties
+```markdown
 -javaagent:/Users/.../spring-boot-start-dee-agent-0.0.1-SNAPSHOT.jar
 ```
 #### 2、修改配置文件
@@ -33,10 +33,10 @@ org:
         method:
           # 需要添加注解的包/类路径
           basePackages:
-            - com/test/controller
+            - com.test.controller
           # 需要添加的注解类路径
           annotationClasses:
-            - com.test.annotation.DeeLog
+            - org.dee.logging.annotation.AgentLog
 ```
 
 ###### 需要添加注解的类

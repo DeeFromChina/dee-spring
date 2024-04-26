@@ -16,7 +16,14 @@ public class LoggersEndpointUtil {
             return false;
         } else {
             Map<String, LoggersEndpoint.SingleLoggerLevels> loggerLevelsMap = getLoggers(configurations);
-            LoggersEndpoint.SingleLoggerLevels loggerLevels = loggerLevelsMap.get(classPath);
+            LoggersEndpoint.SingleLoggerLevels loggerLevels;
+            if(loggerLevelsMap.containsKey(classPath)){
+                loggerLevels = loggerLevelsMap.get(classPath);
+            }else {
+                return true;
+                //如果没有指定，取全局日志级别
+                //loggerLevels = loggerLevelsMap.get("ROOT");
+            }
             switch (loggerLevels.getEffectiveLevel()) {
                 case "OFF": return false;
                 case "FATAL": return false;

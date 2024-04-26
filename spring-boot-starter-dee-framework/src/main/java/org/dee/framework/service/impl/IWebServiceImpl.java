@@ -10,6 +10,7 @@ import org.dee.framework.rpc.RpcRequest;
 import org.dee.framework.rpc.RpcResult;
 import org.dee.framework.service.IWebService;
 import org.dee.framework.utils.RpcRequestUtil;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
@@ -18,9 +19,14 @@ import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
 import java.util.List;
 
+/**
+ * 单表模式
+ * @param <T>
+ * @param <C>
+ */
 public abstract class IWebServiceImpl<T extends BaseEntity, C extends IClient> extends IWebServiceHandler implements IWebService<T> {
 
-    @Resource
+    @Autowired
     protected C client;
 
     @Resource

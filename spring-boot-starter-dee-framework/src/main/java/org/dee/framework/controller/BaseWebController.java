@@ -9,11 +9,11 @@ import org.dee.framework.enums.HttpStatusCode;
 import org.dee.framework.http.WebResponse;
 import org.dee.framework.service.IWebService;
 import org.dee.framework.utils.ValidationUtil;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
@@ -23,7 +23,7 @@ public abstract class BaseWebController<T, S extends IWebService> {
 
     protected String tempCode;
 
-    @Resource
+    @Autowired
     private S service;
 
     @SneakyThrows
