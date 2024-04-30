@@ -1,17 +1,19 @@
 package org.dee.logging.utils;
 
-import java.util.HashMap;
 import java.util.Map;
 
 public class TraceUtil {
 
     public static ThreadLocal<Map<String, Long>> t = new ThreadLocal<>();
 
+    /**
+     * 获取traceId
+     * @return
+     */
     public static synchronized String getTraceId() {
         long time = System.currentTimeMillis();
         Map<String, Long> map = t.get();
         if(map == null) {
-            map = new HashMap<>();
             map.put("time", time);
             map.put("serialNum", 1L);
             t.set(map);

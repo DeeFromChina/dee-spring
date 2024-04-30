@@ -25,6 +25,11 @@ public class TimeStatistics {
     public static void end() {
         long time = System.currentTimeMillis() - (Long)t.get().get("startTime");
         System.out.println(Thread.currentThread().getStackTrace()[2] + " spend: " + time);
+        destroy();
+    }
+
+    public static void destroy() {
+        t = null;
     }
 
 }

@@ -38,6 +38,7 @@
         <dependency>
             <groupId>org.dee</groupId>
             <artifactId>spring-boot-dee-annotation</artifactId>
+            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>org.dee</groupId>
