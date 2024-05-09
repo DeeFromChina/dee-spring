@@ -27,6 +27,7 @@
         <module>spring-boot-starter-dee-framework-demo</module>
         <module>spring-boot-dee-entity</module>
         <module>spring-boot-dee-license</module>
+        <module>spring-boot-dee-annotation-plus</module>
     </modules>
 
     <properties>

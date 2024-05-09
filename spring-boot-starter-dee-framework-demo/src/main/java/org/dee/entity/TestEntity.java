@@ -6,7 +6,7 @@ import lombok.Data;
 
 @Data
 @TableName("test")
-public class TestEntity {
+public class TestEntity extends BaseEntity {
 
     @TableField("code")
     private String code;

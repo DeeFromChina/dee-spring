@@ -1,4 +1,4 @@
-//package org.dee.processor;
+//package org.dee.processor.test.demo;
 //
 //import javax.annotation.processing.AbstractProcessor;
 //import javax.annotation.processing.RoundEnvironment;
@@ -8,7 +8,6 @@
 //import javax.lang.model.element.Element;
 //import javax.lang.model.element.TypeElement;
 //import javax.tools.Diagnostic;
-//import java.io.IOException;
 //import java.util.Set;
 //
 //@SupportedAnnotationTypes("org.springframework.web.bind.annotation.RequestMapping")
@@ -26,12 +25,12 @@
 //                //注解处理器的日志都要使用Messager发送，最终会以编译结果的形式呈现出来；
 //                this.processingEnv.getMessager().printMessage(Diagnostic.Kind.NOTE, "test get file:" + classElement.getSimpleName());
 //
-//                try {
-//                    printFile();
-//                } catch (IOException e) {
-//                    //出现ERROR等级的日志时，相当于编译报了一个error
-//                    this.processingEnv.getMessager().printMessage(Diagnostic.Kind.ERROR, "error in open File : " + e.getMessage());
-//                }
+//                //try {
+//                //    printFile();
+//                //} catch (IOException e) {
+//                //    //出现ERROR等级的日志时，相当于编译报了一个error
+//                //    this.processingEnv.getMessager().printMessage(Diagnostic.Kind.ERROR, "error in open File : " + e.getMessage());
+//                //}
 //            }
 //        }
 //
