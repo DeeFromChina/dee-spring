@@ -54,7 +54,9 @@ public abstract class IMybatiesPlusServiceImpl<M extends BaseMapper<T>, T> exten
         return page(page, wrapper);
     }
 
-    protected abstract LambdaQueryWrapper<T> getPageQueryWrapper(T t);
+    protected LambdaQueryWrapper<T> getPageQueryWrapper(T t) {
+        return new LambdaQueryWrapper<T>();
+    }
 
     /**
      * 查询所有数据
@@ -65,7 +67,9 @@ public abstract class IMybatiesPlusServiceImpl<M extends BaseMapper<T>, T> exten
         return list(getListQueryWrapper(param));
     }
 
-    protected abstract LambdaQueryWrapper<T> getListQueryWrapper(T param);
+    protected LambdaQueryWrapper<T> getListQueryWrapper(T param) {
+        return new LambdaQueryWrapper<T>();
+    }
 
     /**
      * 查询单个数据

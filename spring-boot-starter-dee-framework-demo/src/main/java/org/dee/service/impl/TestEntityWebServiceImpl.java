@@ -5,10 +5,12 @@ import org.dee.client.TestEntityClient;
 import org.dee.entity.TestEntity;
 import org.dee.framework.service.impl.IWebServiceImpl;
 import org.dee.service.TestEntityWebService;
+import org.springframework.stereotype.Service;
 
 import java.io.Serializable;
 import java.util.List;
 
+@Service
 public class TestEntityWebServiceImpl extends IWebServiceImpl<TestEntity, TestEntityClient> implements TestEntityWebService {
 
     @Override

@@ -12,8 +12,9 @@ import com.sun.tools.javac.util.Context;
 import com.sun.tools.javac.util.List;
 import com.sun.tools.javac.util.Name;
 import com.sun.tools.javac.util.Names;
-import org.dee.test.utils.ControllerUtil;
-import org.springframework.web.bind.annotation.RequestMapping;
+import lombok.SneakyThrows;
+import org.dee.processor.strategy.RequestMappingClassStrategy;
+import org.dee.utils.ControllerUtil;
 
 import javax.annotation.processing.*;
 import javax.lang.model.SourceVersion;
@@ -22,7 +23,9 @@ import javax.lang.model.element.TypeElement;
 import javax.lang.model.util.Elements;
 import javax.lang.model.util.Types;
 import javax.tools.Diagnostic;
+import java.lang.annotation.Annotation;
 import java.util.Set;
+
 
 @SupportedAnnotationTypes("org.springframework.web.bind.annotation.RequestMapping")
 @SupportedSourceVersion(SourceVersion.RELEASE_8)
@@ -62,25 +65,25 @@ public class RequestMappingClassProcessor extends AbstractProcessor {
         this.filer = processingEnv.getFiler();
     }
 
+    @SneakyThrows
     @Override
     public boolean process(Set<? extends TypeElement> annotations, RoundEnvironment roundEnv) {
         if(!enable){
             return false;
         }
         messager.printMessage(Diagnostic.Kind.WARNING, "#RequestMappingClassProcessor-start============");
-        for (Element element : roundEnv.getElementsAnnotatedWith(RequestMapping.class)) {
+        //获取使用@RequestMapping注解的元素
+        for (Element element : RequestMappingClassStrategy.getRequestMappingClasses(roundEnv, (Class<? extends Annotation>) Class.forName(CLZ))) {
             //只处理在类上的注解
-            if(element.getKind().isClass()) {
-                String packageName = processingEnv.getElementUtils().getPackageOf(element).toString();
+            if(RequestMappingClassStrategy.isClass(element)) {
+                //String packageName = processingEnv.getElementUtils().getPackageOf(element).toString();
                 javax.lang.model.element.Name classSimpleName = element.getSimpleName();
-                messager.printMessage(Diagnostic.Kind.WARNING, "classSimpleName:" + packageName+"."+classSimpleName.toString());
 
                 JCTree.JCIdent jcIdent = treeMaker.Ident(names.fromString(pkg));
                 Name className = names.fromString(clz);
                 JCTree.JCFieldAccess jcFieldAccess = treeMaker.Select(jcIdent, className);
                 JCTree.JCImport anImport = treeMaker.Import(jcFieldAccess, false);
 
-                messager.printMessage(Diagnostic.Kind.WARNING, element.getSimpleName());
                 //导入注解类
                 TreePath path = trees.getPath(element);
                 JCTree.JCCompilationUnit jccu = (JCTree.JCCompilationUnit) path.getCompilationUnit();
@@ -93,11 +96,6 @@ public class RequestMappingClassProcessor extends AbstractProcessor {
             }
         }
         return false;
-    }
-
-    private String getControllerRequestMappingName(String controllerClassPath) {
-        String baseWebControllerPath = "org.dee.framework.controller.BaseWebController";
-        return ControllerUtil.createControllerRequestMappingName(baseWebControllerPath, controllerClassPath);
     }
 
     /**
@@ -118,25 +116,44 @@ public class RequestMappingClassProcessor extends AbstractProcessor {
                         if(StrUtil.isNotEmpty(newControllerRequestMapping)){
                             List<JCTree.JCAnnotation> annotations = jcClassDecl.mods.annotations;
                             List<JCTree.JCAnnotation> nil = List.nil();
+                            //是否存在修改情况
+                            boolean hasModify = false;
                             for (int i = 0; i < annotations.size(); i++){
                                 JCTree.JCAnnotation anno = annotations.get(i);
                                 if(CLZ.equals(anno.type.toString())){
-                                    JCTree.JCAnnotation e;
-                                    e = treeMaker.Annotation(treeMaker.Ident(names.fromString(clz)),//注解名称
-                                            List.of(treeMaker.Exec(treeMaker.Assign(treeMaker.Ident(names.fromString("value")),//注解属性
-                                                    treeMaker.Literal(newControllerRequestMapping))).expr)//注解属性值
-                                    );
-                                    nil = nil.append(e);
+                                    //@RequestMapping注解没有传入参数，才赋予它新的注解参数
+                                    if(!RequestMappingClassStrategy.annotationHasParam(anno)){
+                                        //设置新的newControllerRequestMapping参数
+                                        JCTree.JCAnnotation e = setNewControllerRequestMappingValue(newControllerRequestMapping);
+                                        nil = nil.append(e);
+                                        hasModify = true;
+                                    }
+                                }else {
+                                    nil = nil.append(anno);
                                 }
                             }
                             //修改方法注解
-                            jcClassDecl.mods.annotations = nil;
+                            if(hasModify){
+                                jcClassDecl.mods.annotations = nil;
+                            }
                         }
                     }
                 }
                 super.visitClassDef(jcClassDecl);
             }
         };
+    }
+
+    /**
+     * 设置新的newControllerRequestMapping参数
+     * @param newControllerRequestMapping
+     * @return
+     */
+    public JCTree.JCAnnotation setNewControllerRequestMappingValue(String newControllerRequestMapping) {
+        return treeMaker.Annotation(treeMaker.Ident(names.fromString(clz)),//注解名称
+                List.of(treeMaker.Exec(treeMaker.Assign(treeMaker.Ident(names.fromString("value")),//注解属性
+                        treeMaker.Literal(newControllerRequestMapping))).expr)//注解属性值
+        );
     }
 
 }

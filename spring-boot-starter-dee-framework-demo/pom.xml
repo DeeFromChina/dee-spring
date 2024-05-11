@@ -19,6 +19,12 @@
     </properties>
 
     <dependencies>
+        <!--fegin-->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-openfeign</artifactId>
+            <version>3.1.2</version>
+        </dependency>
         <dependency>
             <groupId>org.dee</groupId>
             <artifactId>spring-boot-starter-dee-framework</artifactId>

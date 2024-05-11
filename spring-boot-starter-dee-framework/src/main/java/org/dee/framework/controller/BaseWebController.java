@@ -56,7 +56,7 @@ public abstract class BaseWebController<T, S extends IWebService> {
         return webResponse;
     }
 
-    protected abstract void vaildPage(T param);
+    protected void vaildPage(T param) {}
 
     /**
      * 分页查询所有数据
@@ -71,7 +71,7 @@ public abstract class BaseWebController<T, S extends IWebService> {
         return result(page);
     }
 
-    protected abstract void vaildList(T param);
+    protected void vaildList(T param){}
 
     /**
      * 查询所有数据
@@ -97,7 +97,7 @@ public abstract class BaseWebController<T, S extends IWebService> {
         return result((T) service.getById(id));
     }
 
-    protected abstract void vaildAdd(T t);
+    protected void vaildAdd(T t){}
 
     /**
      * 新增数据
@@ -116,7 +116,7 @@ public abstract class BaseWebController<T, S extends IWebService> {
      * 批量新增校验
      * @param entities
      */
-    protected abstract void vaildAddBatch(List<T> entities);
+    protected void vaildAddBatch(List<T> entities){}
 
     /**
      * 批量新增数据
@@ -131,7 +131,7 @@ public abstract class BaseWebController<T, S extends IWebService> {
         return success();
     }
 
-    protected abstract void vaildUpdate(T t);
+    protected void vaildUpdate(T t){}
 
     /**
      * 修改数据
@@ -146,7 +146,7 @@ public abstract class BaseWebController<T, S extends IWebService> {
         return success();
     }
 
-    protected abstract void vaildUpdateBatch(List<T> entities);
+    protected void vaildUpdateBatch(List<T> entities){}
 
     /**
      * 批量修改数据

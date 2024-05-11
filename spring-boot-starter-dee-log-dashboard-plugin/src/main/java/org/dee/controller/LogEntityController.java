@@ -3,7 +3,6 @@ package org.dee.controller;
 import io.swagger.annotations.ApiOperation;
 import org.dee.entity.LogEntity;
 import org.dee.service.LogEntityService;
-import org.dee.framework.controller.SimpleWebController;
 import org.dee.framework.http.WebResponse;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,7 +11,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/logEntity")
-public class LogEntityController extends SimpleWebController<LogEntity, LogEntityService> {
+public class LogEntityController extends org.dee.framework.controller.BaseWebController<LogEntity, LogEntityService> {
 
     @Resource
     private LogEntityService service;

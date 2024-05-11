@@ -1,8 +1,7 @@
-package org.dee.test.utils;
+package org.dee.utils;
 
 import cn.hutool.core.util.StrUtil;
 import com.sun.tools.javac.tree.JCTree;
-import com.sun.tools.javac.util.List;
 import lombok.SneakyThrows;
 
 import java.lang.reflect.ParameterizedType;
@@ -92,20 +91,8 @@ public class ControllerUtil {
      * @return
      */
     public static String createControllerRequestMappingName(JCTree.JCClassDecl jcClassDecl) {
-        JCTree.JCExpression expression = jcClassDecl.getExtendsClause();
-        if(expression == null){
-            return "";
-        }
-        //继承的类
-        String extendClassName = expression.getTree().type.toString();
-        if(!extendClassName.startsWith("org.dee.framework.controller.BaseWebController")){
-            return "";
-        }
-        JCTree.JCTypeApply typeApply = (JCTree.JCTypeApply) expression.getTree();
-        List<JCTree.JCExpression> typeArguments = typeApply.getTypeArguments();
-        String entityName = typeArguments.get(0).toString();
-        //String entityServiceName = typeArguments.get(1).toString();
-        return "/" + StrUtil.lowerFirst(entityName);
+        String entityName = JCTreeUtil.getExtendClassArgument(jcClassDecl, "org.dee.framework.controller.BaseWebController", 0);
+        return StrUtil.isNotEmpty(entityName) ? "/" + StrUtil.lowerFirst(entityName) : entityName;
     }
 
 }

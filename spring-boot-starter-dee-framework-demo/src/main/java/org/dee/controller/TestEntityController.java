@@ -4,10 +4,12 @@ import org.dee.entity.TestEntity;
 import org.dee.framework.controller.BaseWebController;
 import org.dee.service.TestEntityWebService;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
 @RequestMapping
+@RestController
 public class TestEntityController extends BaseWebController<TestEntity, TestEntityWebService> {
     @Override
     protected void vaildPage(TestEntity param) {

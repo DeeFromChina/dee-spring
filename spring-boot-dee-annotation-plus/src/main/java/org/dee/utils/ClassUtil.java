@@ -1,4 +1,4 @@
-package org.dee.test.utils;
+package org.dee.utils;
 
 import lombok.SneakyThrows;
 

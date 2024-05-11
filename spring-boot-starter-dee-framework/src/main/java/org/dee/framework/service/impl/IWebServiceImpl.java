@@ -41,14 +41,16 @@ public abstract class IWebServiceImpl<T extends BaseEntity, C extends IClient> e
      * 预处理参数
      * @param param
      */
-    protected abstract void beforeQueryPage(T param);
+    protected void beforeQueryPage(T param){}
 
     /**
      * 处理查询后的数据
-     * @param msdp
+     * @param page
      * @return
      */
-    protected abstract Page<T> afterQueryPage(Page<T> msdp);
+    protected Page<T> afterQueryPage(Page<T> page){
+        return page;
+    }
 
     @Override
     public Page<T> queryPage(T param) {
@@ -64,7 +66,7 @@ public abstract class IWebServiceImpl<T extends BaseEntity, C extends IClient> e
      * 预处理参数
      * @param param
      */
-    protected abstract void beforeQueryList(T param);
+    protected void beforeQueryList(T param){}
 
     /**
      * 处理查询后的数据
@@ -81,9 +83,11 @@ public abstract class IWebServiceImpl<T extends BaseEntity, C extends IClient> e
         return afterQueryList(rpcResult.getBody());
     }
 
-    protected abstract void beforeGetById(Serializable id);
+    protected void beforeGetById(Serializable id){}
 
-    protected abstract T afterGetById(T t);
+    protected T afterGetById(T t){
+        return t;
+    }
 
     @Override
     public T getById(Serializable id) {
@@ -93,7 +97,9 @@ public abstract class IWebServiceImpl<T extends BaseEntity, C extends IClient> e
         return afterGetById(rpcResult.getBody());
     }
 
-    protected abstract T beforeAdd(T t);
+    protected T beforeAdd(T t){
+        return t;
+    }
 
     @Override
     public void add(T t) {
@@ -102,7 +108,9 @@ public abstract class IWebServiceImpl<T extends BaseEntity, C extends IClient> e
         RpcResult.success(rpcResult);
     }
 
-    protected abstract List<T> beforeAddBatch(List<T> entities);
+    protected List<T> beforeAddBatch(List<T> entities){
+        return entities;
+    }
 
     @Override
     public void addBatch(List<T> entities){
@@ -111,7 +119,9 @@ public abstract class IWebServiceImpl<T extends BaseEntity, C extends IClient> e
         RpcResult.success(rpcResult);
     }
 
-    protected abstract T beforeUpdate(T t);
+    protected T beforeUpdate(T t){
+        return t;
+    }
 
     @Override
     public void update(T t) {
@@ -120,7 +130,9 @@ public abstract class IWebServiceImpl<T extends BaseEntity, C extends IClient> e
         RpcResult.success(rpcResult);
     }
 
-    protected abstract List<T> beforeUpdateBatch(List<T> entities);
+    protected List<T> beforeUpdateBatch(List<T> entities){
+        return entities;
+    }
 
     @Override
     public void updateBatch(List<T> entities){
@@ -129,7 +141,9 @@ public abstract class IWebServiceImpl<T extends BaseEntity, C extends IClient> e
         RpcResult.success(rpcResult);
     }
 
-    protected abstract Serializable beforeDelete(Serializable id);
+    protected Serializable beforeDelete(Serializable id){
+        return id;
+    }
 
     @Override
     public void delete(Serializable id) {
@@ -138,7 +152,9 @@ public abstract class IWebServiceImpl<T extends BaseEntity, C extends IClient> e
         RpcResult.success(rpcResult);
     }
 
-    protected abstract List<Serializable> beforeDeleteBatch(List<Serializable> ids);
+    protected List<Serializable> beforeDeleteBatch(List<Serializable> ids){
+        return ids;
+    }
 
     @Override
     public void deleteBatch(List<Serializable> ids) {
@@ -158,7 +174,9 @@ public abstract class IWebServiceImpl<T extends BaseEntity, C extends IClient> e
      * 处理excel数据
      * @return
      */
-    protected abstract List<T> afterReadExcel(List<T> list);
+    protected List<T> afterReadExcel(List<T> list) {
+        return  list;
+    }
 
     /**
      * 导入数据
@@ -177,7 +195,9 @@ public abstract class IWebServiceImpl<T extends BaseEntity, C extends IClient> e
         vaildFeginResult(rpcResult);
     }
 
-    protected abstract List<T> afterQueryExcel(List<T> list);
+    protected List<T> afterQueryExcel(List<T> list) {
+        return list;
+    }
 
     @Override
     public void exportExcel(String tempCode, T param, HttpServletResponse response) {
