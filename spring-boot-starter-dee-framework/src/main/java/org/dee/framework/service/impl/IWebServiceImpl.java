@@ -73,7 +73,9 @@ public abstract class IWebServiceImpl<T extends BaseEntity, C extends IClient> e
      * @param list
      * @return
      */
-    protected abstract List<T> afterQueryList(List<T> list);
+    protected List<T> afterQueryList(List<T> list) {
+        return list;
+    }
 
     @Override
     public List<T> queryList(T param) {

@@ -13,8 +13,11 @@ import com.sun.tools.javac.util.List;
 import com.sun.tools.javac.util.Name;
 import com.sun.tools.javac.util.Names;
 import lombok.SneakyThrows;
+import org.dee.processor.factory.NewRequestMappingFactory;
+import org.dee.processor.factory.impl.NewControllerRequestMapping;
+import org.dee.processor.factory.impl.NewProviderRequestMapping;
 import org.dee.processor.strategy.RequestMappingClassStrategy;
-import org.dee.utils.ControllerUtil;
+import org.dee.utils.JCTreeUtil;
 
 import javax.annotation.processing.*;
 import javax.lang.model.SourceVersion;
@@ -111,9 +114,14 @@ public class RequestMappingClassProcessor extends AbstractProcessor {
                 if(className.equals(jcClassDecl.getSimpleName().toString())){
                     //判断有包含目标注解
                     if(jcClassDecl.mods.annotations.toString().contains(clz)){
-                        String newControllerRequestMapping = ControllerUtil.createControllerRequestMappingName(jcClassDecl);
+                        JCTree.JCExpression expression = jcClassDecl.getExtendsClause();
+                        if(expression == null){
+                            return;
+                        }
+                        NewRequestMappingFactory factory = new RequestMappingCreator().getFactory(expression);
+                        String newRequestMapping = factory.createNewRequestMappingName(expression);
                         //判断能创建新的RequestMapping地址
-                        if(StrUtil.isNotEmpty(newControllerRequestMapping)){
+                        if(StrUtil.isNotEmpty(newRequestMapping)){
                             List<JCTree.JCAnnotation> annotations = jcClassDecl.mods.annotations;
                             List<JCTree.JCAnnotation> nil = List.nil();
                             //是否存在修改情况
@@ -124,7 +132,7 @@ public class RequestMappingClassProcessor extends AbstractProcessor {
                                     //@RequestMapping注解没有传入参数，才赋予它新的注解参数
                                     if(!RequestMappingClassStrategy.annotationHasParam(anno)){
                                         //设置新的newControllerRequestMapping参数
-                                        JCTree.JCAnnotation e = setNewControllerRequestMappingValue(newControllerRequestMapping);
+                                        JCTree.JCAnnotation e = setNewControllerRequestMappingValue(newRequestMapping);
                                         nil = nil.append(e);
                                         hasModify = true;
                                     }
@@ -154,6 +162,20 @@ public class RequestMappingClassProcessor extends AbstractProcessor {
                 List.of(treeMaker.Exec(treeMaker.Assign(treeMaker.Ident(names.fromString("value")),//注解属性
                         treeMaker.Literal(newControllerRequestMapping))).expr)//注解属性值
         );
+    }
+
+    public class RequestMappingCreator {
+
+        public NewRequestMappingFactory getFactory(JCTree.JCExpression expression) {
+            NewRequestMappingFactory factory = null;
+            if(JCTreeUtil.isExtendClass(expression, NewControllerRequestMapping.extendClass)) {
+                factory = new NewControllerRequestMapping();
+            } else if (JCTreeUtil.isExtendClass(expression, NewProviderRequestMapping.extendClass)) {
+                factory = new NewProviderRequestMapping();
+            }
+            return factory;
+        }
+
     }
 
 }

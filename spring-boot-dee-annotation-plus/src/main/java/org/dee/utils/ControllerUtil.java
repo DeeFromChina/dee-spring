@@ -85,14 +85,4 @@ public class ControllerUtil {
         return controllerRequestMappingName;
     }
 
-    /**
-     * 根据泛型参数，创建新的Controller的RequestMapping值
-     * @param jcClassDecl
-     * @return
-     */
-    public static String createControllerRequestMappingName(JCTree.JCClassDecl jcClassDecl) {
-        String entityName = JCTreeUtil.getExtendClassArgument(jcClassDecl, "org.dee.framework.controller.BaseWebController", 0);
-        return StrUtil.isNotEmpty(entityName) ? "/" + StrUtil.lowerFirst(entityName) : entityName;
-    }
-
 }

@@ -110,20 +110,14 @@ public class FeignClientProcessor extends AbstractProcessor {
                 if(className.equals(jcClassDecl.getSimpleName().toString())){
                     //判断有包含目标注解
                     if(jcClassDecl.mods.annotations.toString().contains(clz)){
-                        JCTree.JCExpression expression = jcClassDecl.getExtendsClause();
-                        if(expression == null){
-                            messager.printMessage(Diagnostic.Kind.WARNING, "#123");
+                        List<JCTree.JCExpression> expressions = jcClassDecl.getImplementsClause();
+                        if(expressions == null || expressions.size() == 0){
+                            return;
                         }
                         //类是否继承了extendClass
-                        String extendClassName = expression.getTree().type.toString();
-                        messager.printMessage(Diagnostic.Kind.WARNING, "#321"+extendClassName.startsWith("org.dee.framework.client.IClient"));
-
-
-                        String entityName = JCTreeUtil.getExtendClassArgument(jcClassDecl, "org.dee.framework.client.IClient", 0);
-                        messager.printMessage(Diagnostic.Kind.WARNING, "#entityName:"+entityName);
+                        String entityName = JCTreeUtil.getImplementClassArgument(jcClassDecl, "org.dee.framework.client.IClient", 0);
                         if(StrUtil.isNotEmpty(entityName)){
                             String bean = StrUtil.lowerFirst(entityName);
-                            messager.printMessage(Diagnostic.Kind.WARNING, "#bean:"+bean);
                             List<JCTree.JCAnnotation> annotations = jcClassDecl.mods.annotations;
                             List<JCTree.JCAnnotation> nil = List.nil();
                             for (int i = 0; i < annotations.size(); i++){
