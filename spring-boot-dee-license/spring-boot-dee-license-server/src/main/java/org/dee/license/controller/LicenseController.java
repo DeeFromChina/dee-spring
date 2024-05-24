@@ -4,7 +4,7 @@ import org.dee.license.properties.LicenseConfigurationProperties;
 import org.dee.license.entity.GenerateLicense;
 import org.dee.license.entity.LicenseCreatorParam;
 import org.dee.license.license.LicenseCreator;
-import org.dee.framework.http.WebResponse;
+import org.dee.http.WebResponse;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;

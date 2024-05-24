@@ -72,7 +72,7 @@ public class FeignClientProcessor extends AbstractProcessor {
         messager.printMessage(Diagnostic.Kind.WARNING, "#FeignClientProcessor-start============");
         //获取使用@Feign注解的元素
         try {
-            for (Element element : FeignClientStrategy.getRequestMappingClasses(roundEnv, (Class<? extends Annotation>) Class.forName(CLZ))) {
+            for (Element element : FeignClientStrategy.getFeignClientClasses(roundEnv, (Class<? extends Annotation>) Class.forName(CLZ))) {
                 javax.lang.model.element.Name classSimpleName = element.getSimpleName();
                 messager.printMessage(Diagnostic.Kind.WARNING, "#FeignClientProcessor-start============"+classSimpleName);
 

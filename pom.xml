@@ -28,6 +28,7 @@
         <module>spring-boot-dee-entity</module>
         <module>spring-boot-dee-license</module>
         <module>spring-boot-dee-annotation-plus</module>
+        <module>spring-cloud-starter-dee-gateway-discovery</module>
     </modules>
 
     <properties>
@@ -113,6 +114,18 @@
                 <groupId>io.springfox</groupId>
                 <artifactId>springfox-swagger-ui</artifactId>
                 <version>${spring.swagger2.version}</version>
+            </dependency>
+            <!--gateway-->
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-starter-gateway</artifactId>
+                <version>3.1.1</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-gateway-server</artifactId>
+                <version>3.1.1</version>
+                <scope>compile</scope>
             </dependency>
             <!-- mybatis-->
             <dependency>

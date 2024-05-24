@@ -1,0 +1,13 @@
+spring:
+  application:
+    name: demo
+  cloud:
+    dee:
+      gateway:
+        enabled: true
+        server-addr: 127.0.0.1:20000
+        routes:
+#          id: ee
+#          uri: lb://sunerp-web
+          predicates:
+            - Header=serverName, oa-kpi-

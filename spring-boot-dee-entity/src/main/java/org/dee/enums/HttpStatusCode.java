@@ -1,4 +1,4 @@
-package org.dee.framework.enums;
+package org.dee.enums;
 
 /**
  * Http返回码

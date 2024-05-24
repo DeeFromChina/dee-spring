@@ -1,8 +1,8 @@
-package org.dee.framework.http;
+package org.dee.http;
 
 import lombok.Data;
 import org.dee.entity.PageParam;
-import org.dee.framework.enums.HttpStatusCode;
+import org.dee.enums.HttpStatusCode;
 
 import java.io.Serializable;
 

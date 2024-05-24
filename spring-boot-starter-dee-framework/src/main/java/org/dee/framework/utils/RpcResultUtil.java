@@ -1,7 +1,7 @@
 package org.dee.framework.utils;
 
 import lombok.extern.slf4j.Slf4j;
-import org.dee.framework.enums.HttpStatusCode;
+import org.dee.enums.HttpStatusCode;
 import org.dee.framework.rpc.RpcResult;
 
 /**

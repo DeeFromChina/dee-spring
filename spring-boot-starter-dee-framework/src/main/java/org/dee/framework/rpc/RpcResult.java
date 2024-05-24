@@ -3,7 +3,7 @@ package org.dee.framework.rpc;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.Data;
 import org.dee.entity.PageParam;
-import org.dee.framework.enums.HttpStatusCode;
+import org.dee.enums.HttpStatusCode;
 
 import java.io.Serializable;
 import java.util.List;

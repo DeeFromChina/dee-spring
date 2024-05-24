@@ -1,0 +1,14 @@
+spring:
+  cloud:
+    dee:
+      gateway:
+        server-addr: 127.0.0.1:20000
+        routes:
+            id: ee
+            uri: lb://sunerp-web
+            description: sunerp-web
+            predicates:
+              - Path=/ee/** #路径匹配
+            filters:
+              - StripPrefix=1
+
