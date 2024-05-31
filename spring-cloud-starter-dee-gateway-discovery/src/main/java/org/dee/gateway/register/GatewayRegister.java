@@ -1,8 +1,6 @@
 package org.dee.gateway.register;
 
 import cn.hutool.core.util.StrUtil;
-import cn.hutool.http.HttpRequest;
-import cn.hutool.json.JSONUtil;
 import lombok.Data;
 import lombok.SneakyThrows;
 import org.dee.gateway.entity.FilterDefinition;
@@ -10,6 +8,11 @@ import org.dee.gateway.entity.GatewayRouteDefinition;
 import org.dee.gateway.entity.PredicateDefinition;
 import org.dee.gateway.properties.GatewayRegisterConfigurationProperties;
 import org.dee.gateway.properties.GatewayRegisterRouteConfigurationProperties;
+import org.dee.gateway.proxy.GatewayProxy;
+import org.dee.gateway.register.beat.BeatInfo;
+import org.dee.gateway.register.beat.BeatReactor;
+import org.dee.utils.LocalDateTimeUtil;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -22,6 +25,11 @@ public class GatewayRegister {
 
     @Resource
     private GatewayRegisterConfigurationProperties properties;
+
+    @Autowired
+    private GatewayProxy serverProxy;
+
+    private BeatReactor beatReactor;
 
     @Value("${spring.application.name}")
     private String serverName;
@@ -41,10 +49,15 @@ public class GatewayRegister {
         //创建GatewayRouteDefinition，为调用gateway注册接口做准备
         GatewayRouteDefinition definition = createGatewayRouteDefinition(routeDefinition);
         //注册至gateway
-        String result = HttpRequest.post("http://"+serverAddr+"/route/add")
-                .header("Content-Type", "application/json")
-                .body(JSONUtil.toJsonStr(definition))
-                .execute().body();
+        serverProxy.sendRegister(serverAddr, definition);
+
+        //建立心跳监测
+        beatReactor = new BeatReactor(serverProxy, 1);
+        BeatInfo beatInfo = new BeatInfo();
+        beatInfo.setId(routeDefinition.getId());
+        beatInfo.setServerAddr(serverAddr);
+        beatReactor.addBeatInfo(beatInfo);
+
         //WebResponse webResponse = JSONUtil.toBean(result, WebResponse.class);
         //if(!HttpStatusCode.OK.is(webResponse.getCode())) {
         //    throw new Exception(webResponse.getMessage());
@@ -122,7 +135,7 @@ public class GatewayRegister {
     @SneakyThrows
     private RouteDefinition createRouteDefinition() {
         GatewayRegisterRouteConfigurationProperties route = properties.getRoute();
-        long currentTimeStamp = new Date().getTime();
+        long currentTimeStamp = LocalDateTimeUtil.getLocalDateTimeStamp(LocalDateTimeUtil.now());
         String id = StrUtil.isEmpty(route.getId()) ? serverName + "_" + currentTimeStamp : route.getId();
         String name = serverName;
         String description = serverName;

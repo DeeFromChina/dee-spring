@@ -29,6 +29,7 @@
         <module>spring-boot-dee-license</module>
         <module>spring-boot-dee-annotation-plus</module>
         <module>spring-cloud-starter-dee-gateway-discovery</module>
+        <module>spring-boot-dee-context</module>
     </modules>
 
     <properties>

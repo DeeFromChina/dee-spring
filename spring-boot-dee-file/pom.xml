@@ -77,6 +77,11 @@
                 <artifactId>spring-boot-dee-utils</artifactId>
                 <version>${parent.version}</version>
             </dependency>
+            <dependency>
+                <groupId>org.dee</groupId>
+                <artifactId>spring-boot-dee-context</artifactId>
+                <version>${parent.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 

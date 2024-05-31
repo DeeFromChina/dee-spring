@@ -1,4 +1,4 @@
-package org.dee.web.context;
+package org.dee.context;
 
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
@@ -14,6 +14,10 @@ public class SpringContext implements ApplicationContextAware {
 
     public void setApplicationContext(ApplicationContext appContext) {
         setContext(appContext);
+    }
+
+    public static ApplicationContext getApplicationContext() {
+        return applicationContext;
     }
 
     private static void setContext(ApplicationContext appContext) {
@@ -57,8 +61,5 @@ public class SpringContext implements ApplicationContextAware {
         return applicationContext.getBeansOfType(clazz);
     }
 
-    public static ApplicationContext getApplicationContext() {
-        return applicationContext;
-    }
 }
 

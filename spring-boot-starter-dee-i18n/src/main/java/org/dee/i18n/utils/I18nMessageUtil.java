@@ -1,6 +1,6 @@
 package org.dee.i18n.utils;
 
-import org.dee.i18n.context.SpringContext;
+import org.dee.context.SpringContext;
 import org.springframework.context.MessageSource;
 
 import java.util.Locale;
