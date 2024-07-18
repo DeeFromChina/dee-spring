@@ -12,6 +12,22 @@ public class HttpServerImpl extends AbstractServerProxy {
 
     @Override
     public boolean sendRegisterReq(String serverAddr, GatewayRouteDefinition definition) {
+        boolean isSuccess = false;
+        if(serverAddr.indexOf(",") > 0){
+            String[] serverAddrs = serverAddr.split(",");
+            for(String server : serverAddrs) {
+                if(!sendSingleRegisterReq(server, definition)) {
+                    isSuccess = false;
+                }
+            }
+        } else {
+            isSuccess = sendSingleRegisterReq(serverAddr, definition);
+        }
+        return isSuccess;
+    }
+
+    //TODO 缺少重试机制
+    private boolean sendSingleRegisterReq(String serverAddr, GatewayRouteDefinition definition) {
         String url = "http://" + serverAddr;
         if(sendPostConnection(url, REGISTER_URL, definition)) {
             return true;
@@ -19,7 +35,6 @@ public class HttpServerImpl extends AbstractServerProxy {
         log.error("serverName:{} is disconnection", new Object[]{serverAddr});
         return false;
     }
-
 
     @Override
     public boolean sendBeatReq(String serverAddr, BeatInfo beatInfo) {

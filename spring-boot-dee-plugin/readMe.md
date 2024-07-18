@@ -13,3 +13,19 @@ plugin的主启动类作为父工程，其他插件工程作为子工程。子�
 解1: 如果将主程序没有的jar包，跟着子模块jar包一起加载
 解2: 分成web项目和server项目，web项目可以通过plugin方式动态添加，所需要的jar提前在plugin-main项目准备好。
 server作为单独的微服务实现。
+
+## 具体做法
+插件工程按正常的spring项目来写，只是没有启动类，使用mvn package打包成jar包，在plugin主项目中注册插件。
+
+如：
+现有插件工程spring-plugin-demo,结构目录如下：
+```markdown
+spring-plugin-demo  
+       L src  
+          L  main
+              L controller
+                  L TestController
+```
+
+通过mvn package将spring-plugin-demo打成jar包spring-plugin-demo-1.0-SNAPSHOT.jar
+plugin主项目是一个引用了spring-boot-dee-plugin的项目，主项目启动后，调用PluginController的/controller/add接口，传入spring-plugin-demo-1.0-SNAPSHOT.jar的路径加载jar包

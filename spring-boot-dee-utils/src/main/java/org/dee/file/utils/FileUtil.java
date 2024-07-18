@@ -4,6 +4,7 @@ import cn.hutool.core.lang.Assert;
 import cn.hutool.core.util.ZipUtil;
 import org.apache.commons.io.FileUtils;
 import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.streaming.SXSSFWorkbook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.io.ClassPathResource;
@@ -68,6 +69,9 @@ public class FileUtil {
                     response.addHeader("Content-Disposition", "attachment;filename=" + fileName);
                     wb.write(outputStream);
                     outputStream.flush();
+                    if(wb instanceof SXSSFWorkbook){
+                        ((SXSSFWorkbook) wb).dispose();
+                    }
                     wb.close();
                 } catch (Throwable var14) {
                     var4 = var14;

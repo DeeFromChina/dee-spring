@@ -69,9 +69,7 @@ public class BeatReactor implements Closeable {
 
     public void addBeatInfo(BeatInfo beatInfo) {
         log.info("[BEAT] adding beat: {} to beat map.", beatInfo);
-        LocalDateTime lastDateTime = LocalDateTimeUtil.offset(LocalDateTime.now(), beatInfo.getPeriod(), ChronoUnit.SECONDS);
-        beatInfo.setLastTimeStamp(LocalDateTimeUtil.getLocalDateTimeStamp(lastDateTime));
-        this.executorService.schedule(new BeatTask(beatInfo), beatInfo.getPeriod(), TimeUnit.MILLISECONDS);
+        startTask(beatInfo, beatInfo.getPeriod());
     }
 
     public void removeBeatInfo(BeatInfo beatInfo) {
@@ -80,6 +78,12 @@ public class BeatReactor implements Closeable {
         if (info != null) {
             info.setStopped(true);
         }
+    }
+
+    public void startTask(BeatInfo beatInfo, long nextTime) {
+        LocalDateTime lastDateTime = LocalDateTimeUtil.offset(LocalDateTime.now(), nextTime + 11, ChronoUnit.SECONDS);
+        beatInfo.setLastTimeStamp(LocalDateTimeUtil.getLocalDateTimeStamp(lastDateTime));
+        this.executorService.schedule(new BeatTask(beatInfo), nextTime, TimeUnit.SECONDS);
     }
 
     class BeatTask implements Runnable {
@@ -101,7 +105,7 @@ public class BeatReactor implements Closeable {
                 } catch (Exception e) {
                     log.error("[CLIENT-BEAT] failed to send beat: {}, unknown exception msg: {}", new Object[]{JSONUtil.toJsonStr(this.beatInfo), e.getMessage(), e});
                 } finally {
-                    BeatReactor.this.executorService.schedule(BeatReactor.this.new BeatTask(this.beatInfo), nextTime, TimeUnit.MILLISECONDS);
+                    BeatReactor.this.startTask(beatInfo, nextTime);
                 }
             }
         }

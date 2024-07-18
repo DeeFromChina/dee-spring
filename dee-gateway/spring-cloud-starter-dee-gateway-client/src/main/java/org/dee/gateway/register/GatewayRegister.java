@@ -55,6 +55,7 @@ public class GatewayRegister {
         beatReactor = new BeatReactor(serverProxy, 1);
         BeatInfo beatInfo = new BeatInfo();
         beatInfo.setId(routeDefinition.getId());
+        beatInfo.setServiceName(serverName);
         beatInfo.setServerAddr(serverAddr);
         beatReactor.addBeatInfo(beatInfo);
 

@@ -168,10 +168,10 @@ public class ExcelExportUtil {
             if(subEntity instanceof HashMap){
                 return ((HashMap)subEntity).get(subValue);
             }
-            else if(subEntity.getClass().getName().startsWith("com.sunline")){
-                Map<String, Object> subMap = BeanUtil.beanToMap(subEntity);
-                return subMap.get(subValue);
-            }
+            //else if(subEntity.getClass().getName().startsWith("com.sunline")){
+            //    Map<String, Object> subMap = BeanUtil.beanToMap(subEntity);
+            //    return subMap.get(subValue);
+            //}
         }
         return null;
     }

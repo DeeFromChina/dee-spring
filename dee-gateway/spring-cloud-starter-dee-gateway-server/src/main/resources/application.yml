@@ -1,0 +1,8 @@
+spring:
+  cloud:
+    dee:
+      gateway:
+        health:
+          enabled: true
+          sender: server/client
+

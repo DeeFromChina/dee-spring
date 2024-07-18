@@ -210,3 +210,142 @@ public class CustomRequestMappingHandlerMapping extends RequestMappingHandlerMap
 
 }
 ```
+
+RequestBodyAdvice
+`RequestBodyAdvice` 是 Spring Web MVC 提供的一个接口，它允许开发者在请求体（Request Body）被绑定到控制器方法参数之前或之后进行拦截和处理。这可以用于日志记录、请求体验证、请求体修改等多种场景。通过实现 `RequestBodyAdvice` 接口，你可以自定义请求体的处理逻辑。
+
+`RequestBodyAdvice` 接口中定义了几个关键的方法：
+
+- `supports(MethodParameter methodParameter, Type targetType, Class<? extends HttpMessageConverter<?>> converterType)`: 用于判断当前实现的 `RequestBodyAdvice` 是否应该应用于给定的请求体。返回 `true` 表示适用。
+- `beforeBodyRead(HttpInputMessage inputMessage, MethodParameter methodParameter, Type targetType, Class<? extends HttpMessageConverter<?>> converterType)`: 在请求体被读取并绑定到控制器方法参数之前调用。可以修改 `HttpInputMessage` 或者进行其他前置处理。
+- `afterBodyRead(Object body, HttpInputMessage inputMessage, MethodParameter methodParameter, Type targetType, Class<? extends HttpMessageConverter<?>> converterType)`: 在请求体被读取并绑定到控制器方法参数之后调用。可以修改或检查已绑定的对象。
+
+### 举例
+
+假设我们想要在所有通过 `@RequestBody` 注解接收的请求体中自动添加一些公共信息，比如时间戳，我们可以通过实现 `RequestBodyAdvice` 来实现。
+
+首先，我们定义一个简单的 `RequestBodyAdvice` 实现，用于在请求体中添加时间戳：
+
+```java
+import org.springframework.core.MethodParameter;
+import org.springframework.http.HttpInputMessage;
+import org.springframework.http.converter.HttpMessageConverter;
+import org.springframework.web.bind.annotation.RequestBodyAdvice;
+import org.springframework.web.servlet.mvc.method.annotation.RequestBodyAdviceAdapter;
+
+import java.io.IOException;
+
+@RequestBodyAdvice
+public class TimestampRequestBodyAdvice extends RequestBodyAdviceAdapter {
+
+    @Override
+    public boolean supports(MethodParameter methodParameter, Type targetType,
+                            Class<? extends HttpMessageConverter<?>> converterType) {
+        // 假设我们只对某些类型的请求体感兴趣，比如这里以 MyRequest 为例
+        return MyRequest.class.isAssignableFrom(targetType);
+    }
+
+    @Override
+    public Object afterBodyRead(Object body, HttpInputMessage inputMessage,
+                                MethodParameter methodParameter, Type targetType,
+                                Class<? extends HttpMessageConverter<?>> converterType) {
+        // 假设 MyRequest 有一个 setTimestamp 方法
+        if (body instanceof MyRequest) {
+            MyRequest myRequest = (MyRequest) body;
+            myRequest.setTimestamp(System.currentTimeMillis());
+        }
+        return body;
+    }
+}
+
+// 假设的 MyRequest 类
+class MyRequest {
+    private Long timestamp;
+
+    // getters and setters
+    public Long getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(Long timestamp) {
+        this.timestamp = timestamp;
+    }
+}
+```
+
+然后，确保 Spring 能够扫描到并注册你的 `RequestBodyAdvice` 实现。通常，如果你将 `TimestampRequestBodyAdvice` 放在一个被 Spring 管理的组件扫描路径下，并且它被标记为 `@RequestBodyAdvice`，那么 Spring 就会自动注册它。
+
+### 注意事项
+
+- 确保你的 `RequestBodyAdvice` 实现是线程安全的，尤其是如果你计划在 `afterBodyRead` 方法中修改请求体对象时。
+- `supports` 方法的实现非常关键，因为它决定了哪些请求体会被你的 `RequestBodyAdvice` 处理。
+- 在处理请求体时，需要小心处理可能的异常和错误情况，以避免影响整个请求处理流程。
+
+
+ResponseBodyAdvice
+
+`ResponseBodyAdvice` 是 Spring 框架提供的一个接口，它允许开发者在控制器（Controller）方法返回的响应体（Response Body）被写入到 HTTP 响应之前进行拦截和处理。这使得开发者可以对所有通过 `@ResponseBody` 或 `@RestController` 注解返回的响应体进行全局的、统一的修改或增强操作，如添加统一的响应头、对返回结果进行包装、数据加密或压缩等。
+
+### ResponseBodyAdvice 的主要方法
+
+- `supports(MethodParameter returnType, Class<? extends HttpMessageConverter<?>> converterType)`: 用于判断当前实现类是否支持对指定返回类型的响应体进行处理。如果返回 `true`，则会执行 `beforeBodyWrite` 方法；如果返回 `false`，则不会执行。
+- `beforeBodyWrite(Object body, MethodParameter returnType, MediaType selectedContentType, Class<? extends HttpMessageConverter<?>> selectedConverterType, ServerHttpRequest request, ServerHttpResponse response)`: 在响应体写入之前调用，可以对响应体进行修改或增强。该方法的返回值将作为最终的响应体返回给客户端。
+- `handleEmptyBody(Object body, HttpOutputMessage outputMessage)`: 当控制器方法返回 `null` 时，会调用此方法来处理空响应体的情况。默认实现会返回一个空的 `HttpHeaders` 对象，但开发者可以重写此方法以生成非空的响应体。
+
+### 举例
+
+假设我们有一个 Spring Boot 应用，其中有一个控制器方法返回用户信息，现在我们想要在所有返回的用户信息中添加一个时间戳字段。我们可以使用 `ResponseBodyAdvice` 来实现这一需求。
+
+首先，定义一个 `UserResponse` 类来封装用户信息和时间戳：
+
+```java
+public class UserResponse {
+    private User user;
+    private long timestamp;
+
+    // 省略getter和setter方法
+}
+```
+
+然后，实现 `ResponseBodyAdvice` 接口，并重写 `supports` 和 `beforeBodyWrite` 方法：
+
+```java
+import org.springframework.core.MethodParameter;
+import org.springframework.http.MediaType;
+import org.springframework.http.converter.HttpMessageConverter;
+import org.springframework.http.server.ServerHttpRequest;
+import org.springframework.http.server.ServerHttpResponse;
+import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
+
+@ControllerAdvice
+public class MyResponseBodyAdvice implements ResponseBodyAdvice<Object> {
+
+    @Override
+    public boolean supports(MethodParameter returnType, Class<? extends HttpMessageConverter<?>> converterType) {
+        // 假设我们对所有返回Object类型的响应体都进行处理
+        return true;
+    }
+
+    @Override
+    public Object beforeBodyWrite(Object body, MethodParameter returnType, MediaType selectedContentType,
+                                  Class<? extends HttpMessageConverter<?>> selectedConverterType, ServerHttpRequest request,
+                                  ServerHttpResponse response) {
+        if (body instanceof User) {
+            User user = (User) body;
+            UserResponse userResponse = new UserResponse();
+            userResponse.setUser(user);
+            userResponse.setTimestamp(System.currentTimeMillis());
+            return userResponse;
+        }
+        // 如果不是User类型，则直接返回原响应体
+        return body;
+    }
+
+    // handleEmptyBody 方法在这里可以保持默认实现，因为我们不处理空响应体的情况
+}
+```
+
+在这个例子中，`MyResponseBodyAdvice` 类通过 `@ControllerAdvice` 注解被标记为一个全局的控制器增强器。它实现了 `ResponseBodyAdvice` 接口，并在 `beforeBodyWrite` 方法中检查响应体是否为 `User` 类型。如果是，就将其封装到 `UserResponse` 对象中，并添加一个时间戳字段。最后，将封装后的 `UserResponse` 对象作为新的响应体返回给客户端。
+
+通过这种方式，我们可以对所有通过 `@ResponseBody` 或 `@RestController` 注解返回的 `User` 类型响应体进行统一的处理，而无需在每个控制器方法中重复相同的逻辑。
